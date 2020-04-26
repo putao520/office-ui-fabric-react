@@ -1,10 +1,16 @@
 // @ts-check
 
-const { webpackTask, argv, logger } = require('just-scripts');
+const { webpackCliTask, argv, logger } = require('just-scripts');
 const path = require('path');
 const fs = require('fs');
 
-exports.webpack = webpackTask();
+exports.webpack = function() {
+  const args = argv();
+  return webpackCliTask({
+    webpackCliArgs: args.production ? ['--production'] : [],
+    nodeArgs: ['--max-old-space-size=4096'],
+  });
+};
 exports.webpackDevServer = async function() {
   const fp = require('find-free-port');
   const webpackConfigFilePath = argv().webpackConfig || 'webpack.serve.config.js';
@@ -38,7 +44,7 @@ exports.webpackDevServerWithCompileResolution = async function() {
     });
 
     const devServerOptions = Object.assign({}, webpackConfig.devServer, {
-      stats: 'minimal'
+      stats: 'minimal',
     });
     server = new webpackDevServer(compiler, devServerOptions);
     const port = webpackConfig.devServer.port;

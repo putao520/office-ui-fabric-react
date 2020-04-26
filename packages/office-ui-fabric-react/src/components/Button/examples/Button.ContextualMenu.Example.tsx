@@ -8,19 +8,25 @@ export interface IButtonExampleProps {
 }
 
 const menuProps: IContextualMenuProps = {
+  // For example: disable dismiss if shift key is held down while dismissing
+  onDismiss: ev => {
+    if (ev && ev.shiftKey) {
+      ev.preventDefault();
+    }
+  },
   items: [
     {
       key: 'emailMessage',
       text: 'Email message',
-      iconProps: { iconName: 'Mail' }
+      iconProps: { iconName: 'Mail' },
     },
     {
       key: 'calendarEvent',
       text: 'Calendar event',
-      iconProps: { iconName: 'Calendar' }
-    }
+      iconProps: { iconName: 'Calendar' },
+    },
   ],
-  directionalHintFixed: true
+  directionalHintFixed: true,
 };
 const addIcon: IIconProps = { iconName: 'Add' };
 

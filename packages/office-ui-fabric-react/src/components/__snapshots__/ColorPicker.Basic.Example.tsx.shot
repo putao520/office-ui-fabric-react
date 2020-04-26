@@ -9,6 +9,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
       }
 >
   <div
+    aria-label="Color picker, Red 255 Green 255 Blue 255 Alpha 100% selected."
     className=
         ms-ColorPicker
         {
@@ -21,6 +22,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
           min-width: 352px;
           position: relative;
         }
+    role="group"
   >
     <div
       className=
@@ -33,6 +35,12 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
           }
     >
       <div
+        aria-describedby="ColorRectangle-description0"
+        aria-label="Saturation and brightness"
+        aria-valuemax={100}
+        aria-valuemin={0}
+        aria-valuenow={0}
+        aria-valuetext="Saturation 0 brightness 100"
         className=
             ms-ColorPicker-colorRect
             {
@@ -42,23 +50,53 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
               margin-bottom: 8px;
               min-height: 220px;
               min-width: 220px;
+              outline: none;
               position: relative;
             }
             @media screen and (-ms-high-contrast: active){& {
               -ms-high-contrast-adjust: none;
             }
+            .ms-Fabric--isFocusVisible &:focus {
+              outline: 1px solid #605e5c;
+            }
+        data-is-focusable={true}
+        onKeyDown={[Function]}
         onMouseDown={[Function]}
+        role="slider"
         style={
           Object {
             "backgroundColor": "#ff0000",
           }
         }
+        tabIndex={0}
       >
+        <div
+          className=
+
+              {
+                border: 0px;
+                height: 1px;
+                margin-bottom: -1px;
+                margin-left: -1px;
+                margin-right: -1px;
+                margin-top: -1px;
+                overflow: hidden;
+                padding-bottom: 0px;
+                padding-left: 0px;
+                padding-right: 0px;
+                padding-top: 0px;
+                position: absolute;
+                width: 1px;
+              }
+          id="ColorRectangle-description0"
+        >
+          Use left and right arrow keys to set saturation. Use up and down arrow keys to set brightness.
+        </div>
         <div
           className=
               ms-ColorPicker-light
               {
-                background: linear-gradient(to right, white 0%, transparent 100%);
+                background: linear-gradient(to right, white 0%, transparent 100%) /*@noflip*/;
                 bottom: 0px;
                 left: 0px;
                 position: absolute;
@@ -126,36 +164,33 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
               }
         >
           <div
+            aria-label="Hue slider: Use left and right arrow keys to change value, hold shift for a larger jump"
+            aria-valuemax={359}
+            aria-valuemin={0}
+            aria-valuenow={0}
+            aria-valuetext="0"
             className=
                 ms-ColorPicker-slider
                 is-hue
                 {
+                  background: linear-gradient(to left,red 0,#f09 10%,#cd00ff 20%,#3200ff 30%,#06f 40%,#00fffd 50%,#0f6 60%,#35ff00 70%,#cdff00 80%,#f90 90%,red 100%);
                   border-radius: 2px;
                   border: 1px solid #edebe9;
                   box-sizing: border-box;
                   height: 20px;
                   margin-bottom: 8px;
+                  outline: none;
                   position: relative;
                 }
+                .ms-Fabric--isFocusVisible &:focus {
+                  outline: 1px solid #605e5c;
+                }
+            data-is-focusable={true}
+            onKeyDown={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "linear-gradient(to left,red 0,#f09 10%,#cd00ff 20%,#3200ff 30%,#06f 40%,#00fffd 50%,#0f6 60%,#35ff00 70%,#cdff00 80%,#f90 90%,red 100%)",
-              }
-            }
+            role="slider"
+            tabIndex={0}
           >
-            <div
-              className=
-                  ms-ColorPicker-sliderOverlay
-                  {
-                    bottom: 0px;
-                    content: ;
-                    left: 0px;
-                    position: absolute;
-                    right: 0px;
-                    top: 0px;
-                  }
-            />
             <div
               className=
                   ms-ColorPicker-thumb
@@ -179,23 +214,33 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
             />
           </div>
           <div
+            aria-label="Alpha slider: Use left and right arrow keys to change value, hold shift for a larger jump"
+            aria-valuemax={100}
+            aria-valuemin={0}
+            aria-valuenow={100}
+            aria-valuetext="100"
             className=
                 ms-ColorPicker-slider
                 is-alpha
                 {
+                  background-image: url(data;
+                  base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAJUlEQVQYV2N89erVfwY0ICYmxoguxjgUFKI7GsTH5m4M3w1ChQC1/Ca8i2n1WgAAAABJRU5ErkJggg==): ;
                   border-radius: 2px;
                   border: 1px solid #edebe9;
                   box-sizing: border-box;
                   height: 20px;
                   margin-bottom: 8px;
+                  outline: none;
                   position: relative;
                 }
+                .ms-Fabric--isFocusVisible &:focus {
+                  outline: 1px solid #605e5c;
+                }
+            data-is-focusable={true}
+            onKeyDown={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "backgroundImage": "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAJUlEQVQYV2N89erVfwY0ICYmxoguxjgUFKI7GsTH5m4M3w1ChQC1/Ca8i2n1WgAAAABJRU5ErkJggg==)",
-              }
-            }
+            role="slider"
+            tabIndex={0}
           >
             <div
               className=
@@ -210,7 +255,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                   }
               style={
                 Object {
-                  "background": "linear-gradient(to right, transparent 0, #ffffff 100%)",
+                  "background": "linear-gradient(to right, transparent, #ffffff)",
                 }
               }
             />
@@ -277,6 +322,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
             & tbody td:last-of-type .ms-ColorPicker-input {
               padding-right: 0px;
             }
+        role="group"
       >
         <thead>
           <tr
@@ -311,7 +357,11 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
             <td>
               Blue
             </td>
-            <td>
+            <td
+              className=
+
+
+            >
               Alpha
             </td>
           </tr>
@@ -368,7 +418,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                           align-items: stretch;
                           background: #ffffff;
                           border-radius: 2px;
-                          border: 1px solid #8a8886;
+                          border: 1px solid #605e5c;
                           box-shadow: none;
                           box-sizing: border-box;
                           cursor: text;
@@ -395,6 +445,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                     <input
                       aria-invalid={false}
                       aria-label="Hex"
+                      autoComplete="off"
                       className=
                           ms-TextField-field
                           {
@@ -462,7 +513,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                             font-weight: 400;
                             opacity: 1;
                           }
-                      id="TextField0"
+                      id="TextField1"
                       onBlur={[Function]}
                       onChange={[Function]}
                       onFocus={[Function]}
@@ -475,13 +526,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                 </div>
               </div>
             </td>
-            <td
-              style={
-                Object {
-                  "width": "18%",
-                }
-              }
-            >
+            <td>
               <div
                 className=
                     ms-TextField
@@ -531,7 +576,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                           align-items: stretch;
                           background: #ffffff;
                           border-radius: 2px;
-                          border: 1px solid #8a8886;
+                          border: 1px solid #605e5c;
                           box-shadow: none;
                           box-sizing: border-box;
                           cursor: text;
@@ -558,6 +603,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                     <input
                       aria-invalid={false}
                       aria-label="Red"
+                      autoComplete="off"
                       className=
                           ms-TextField-field
                           {
@@ -625,7 +671,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                             font-weight: 400;
                             opacity: 1;
                           }
-                      id="TextField3"
+                      id="TextField4"
                       onBlur={[Function]}
                       onChange={[Function]}
                       onFocus={[Function]}
@@ -638,13 +684,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                 </div>
               </div>
             </td>
-            <td
-              style={
-                Object {
-                  "width": "18%",
-                }
-              }
-            >
+            <td>
               <div
                 className=
                     ms-TextField
@@ -694,7 +734,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                           align-items: stretch;
                           background: #ffffff;
                           border-radius: 2px;
-                          border: 1px solid #8a8886;
+                          border: 1px solid #605e5c;
                           box-shadow: none;
                           box-sizing: border-box;
                           cursor: text;
@@ -721,6 +761,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                     <input
                       aria-invalid={false}
                       aria-label="Green"
+                      autoComplete="off"
                       className=
                           ms-TextField-field
                           {
@@ -788,7 +829,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                             font-weight: 400;
                             opacity: 1;
                           }
-                      id="TextField6"
+                      id="TextField7"
                       onBlur={[Function]}
                       onChange={[Function]}
                       onFocus={[Function]}
@@ -801,13 +842,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                 </div>
               </div>
             </td>
-            <td
-              style={
-                Object {
-                  "width": "18%",
-                }
-              }
-            >
+            <td>
               <div
                 className=
                     ms-TextField
@@ -857,7 +892,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                           align-items: stretch;
                           background: #ffffff;
                           border-radius: 2px;
-                          border: 1px solid #8a8886;
+                          border: 1px solid #605e5c;
                           box-shadow: none;
                           box-sizing: border-box;
                           cursor: text;
@@ -884,6 +919,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                     <input
                       aria-invalid={false}
                       aria-label="Blue"
+                      autoComplete="off"
                       className=
                           ms-TextField-field
                           {
@@ -951,7 +987,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                             font-weight: 400;
                             opacity: 1;
                           }
-                      id="TextField9"
+                      id="TextField10"
                       onBlur={[Function]}
                       onChange={[Function]}
                       onFocus={[Function]}
@@ -964,13 +1000,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                 </div>
               </div>
             </td>
-            <td
-              style={
-                Object {
-                  "width": "18%",
-                }
-              }
-            >
+            <td>
               <div
                 className=
                     ms-TextField
@@ -1020,7 +1050,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                           align-items: stretch;
                           background: #ffffff;
                           border-radius: 2px;
-                          border: 1px solid #8a8886;
+                          border: 1px solid #605e5c;
                           box-shadow: none;
                           box-sizing: border-box;
                           cursor: text;
@@ -1047,6 +1077,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                     <input
                       aria-invalid={false}
                       aria-label="Alpha"
+                      autoComplete="off"
                       className=
                           ms-TextField-field
                           {
@@ -1114,7 +1145,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                             font-weight: 400;
                             opacity: 1;
                           }
-                      id="TextField12"
+                      id="TextField13"
                       onBlur={[Function]}
                       onChange={[Function]}
                       onFocus={[Function]}
@@ -1139,133 +1170,6 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
           margin-left: 10px;
         }
   >
-    <div
-      className=
-          ms-Toggle
-          is-enabled
-          {
-            -moz-osx-font-smoothing: grayscale;
-            -webkit-font-smoothing: antialiased;
-            font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
-            font-size: 14px;
-            font-weight: 400;
-            margin-bottom: 8px;
-          }
-    >
-      <label
-        className=
-            ms-Label
-            ms-Toggle-label
-            {
-              -moz-osx-font-smoothing: grayscale;
-              -webkit-font-smoothing: antialiased;
-              box-shadow: none;
-              box-sizing: border-box;
-              color: #323130;
-              display: block;
-              font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
-              font-size: 14px;
-              font-weight: 600;
-              margin-bottom: 0px;
-              margin-left: 0px;
-              margin-right: 0px;
-              margin-top: 0px;
-              overflow-wrap: break-word;
-              padding-bottom: 5px;
-              padding-left: 0;
-              padding-right: 0;
-              padding-top: 5px;
-              word-wrap: break-word;
-            }
-        htmlFor="Toggle15"
-        id="Toggle15-label"
-      >
-        Hide alpha slider
-      </label>
-      <div
-        className=
-            ms-Toggle-innerContainer
-            {
-              display: inline-flex;
-              position: relative;
-            }
-      >
-        <button
-          aria-checked={false}
-          aria-labelledby="Toggle15-label"
-          checked={false}
-          className=
-              ms-Toggle-background
-              {
-                align-items: center;
-                background: #ffffff;
-                border-radius: 10px;
-                border: 1px solid #605e5c;
-                box-sizing: border-box;
-                cursor: pointer;
-                display: flex;
-                font-size: 20px;
-                height: 20px;
-                outline: transparent;
-                padding-bottom: 0;
-                padding-left: 3px;
-                padding-right: 3px;
-                padding-top: 0;
-                position: relative;
-                transition: all 0.1s ease;
-                width: 40px;
-              }
-              &::-moz-focus-inner {
-                border: 0;
-              }
-              .ms-Fabric--isFocusVisible &:focus:after {
-                border: 1px solid #ffffff;
-                bottom: -2px;
-                content: "";
-                left: -2px;
-                outline: 1px solid #605e5c;
-                position: absolute;
-                right: -2px;
-                top: -2px;
-                z-index: 1;
-              }
-              &:hover {
-                border-color: #323130;
-              }
-              &:hover .ms-Toggle-thumb {
-                background-color: #201f1e;
-              }
-              @media screen and (-ms-high-contrast: active){&:hover .ms-Toggle-thumb {
-                border-color: Highlight;
-              }
-              @media screen and (-ms-high-contrast: active){&:hover {
-                border-color: Highlight;
-              }
-          data-is-focusable={true}
-          id="Toggle15"
-          onChange={[Function]}
-          onClick={[Function]}
-          role="switch"
-          type="button"
-        >
-          <div
-            className=
-                ms-Toggle-thumb
-                {
-                  background-color: #605e5c;
-                  border-color: transparent;
-                  border-radius: 50%;
-                  border-style: solid;
-                  border-width: .28em;
-                  box-sizing: border-box;
-                  height: 12px;
-                  transition: all 0.1s ease;
-                  width: 12px;
-                }
-          />
-        </button>
-      </div>
-    </div>
     <div
       className=
           ms-Toggle
@@ -1308,7 +1212,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
         htmlFor="Toggle16"
         id="Toggle16-label"
       >
-        Show Preview Box
+        Show preview box
       </label>
       <div
         className=
@@ -1377,7 +1281,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
           role="switch"
           type="button"
         >
-          <div
+          <span
             className=
                 ms-Toggle-thumb
                 {
@@ -1387,6 +1291,7 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                   border-style: solid;
                   border-width: .28em;
                   box-sizing: border-box;
+                  display: block;
                   height: 12px;
                   transition: all 0.1s ease;
                   width: 12px;
@@ -1397,6 +1302,469 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                 }
           />
         </button>
+      </div>
+    </div>
+    <div
+      className=
+
+
+    >
+      <div
+        aria-labelledby="ChoiceGroup17-label"
+        className=
+            ms-ChoiceFieldGroup
+            {
+              -moz-osx-font-smoothing: grayscale;
+              -webkit-font-smoothing: antialiased;
+              display: block;
+              font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+              font-size: 14px;
+              font-weight: 400;
+            }
+        role="radiogroup"
+      >
+        <label
+          className=
+              ms-Label
+              {
+                -moz-osx-font-smoothing: grayscale;
+                -webkit-font-smoothing: antialiased;
+                box-shadow: none;
+                box-sizing: border-box;
+                color: #323130;
+                display: block;
+                font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+                font-size: 14px;
+                font-weight: 600;
+                margin-bottom: 0px;
+                margin-left: 0px;
+                margin-right: 0px;
+                margin-top: 0px;
+                overflow-wrap: break-word;
+                padding-bottom: 5px;
+                padding-left: 0;
+                padding-right: 0;
+                padding-top: 5px;
+                word-wrap: break-word;
+              }
+          id="ChoiceGroup17-label"
+        >
+          Alpha slider type
+        </label>
+        <div
+          className=
+              ms-ChoiceFieldGroup-flexContainer
+
+        >
+          <div
+            className=
+                ms-ChoiceField
+                {
+                  -moz-osx-font-smoothing: grayscale;
+                  -webkit-font-smoothing: antialiased;
+                  align-items: center;
+                  border: none;
+                  box-sizing: border-box;
+                  color: #323130;
+                  display: flex;
+                  font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+                  font-size: 14px;
+                  font-weight: 400;
+                  margin-top: 8px;
+                  min-height: 26px;
+                  position: relative;
+                }
+                & .ms-ChoiceFieldLabel {
+                  display: inline-block;
+                  padding-left: 26px;
+                }
+          >
+            <div
+              className=
+                  ms-ChoiceField-wrapper
+
+            >
+              <input
+                checked={true}
+                className=
+                    ms-ChoiceField-input
+                    {
+                      height: 100%;
+                      margin-bottom: 0px;
+                      margin-left: 0px;
+                      margin-right: 0px;
+                      margin-top: 0px;
+                      opacity: 0;
+                      position: absolute;
+                      right: 0px;
+                      top: 0px;
+                      width: 100%;
+                    }
+                id="ChoiceGroup17-alpha"
+                name="ChoiceGroup17"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                type="radio"
+              />
+              <label
+                className=
+                    ms-ChoiceField-field
+                    is-checked
+                    {
+                      border-color: #0078d4;
+                      cursor: pointer;
+                      display: inline-block;
+                      margin-top: 0px;
+                      min-height: 20px;
+                      position: relative;
+                      user-select: none;
+                      vertical-align: top;
+                    }
+                    &:hover .ms-ChoiceFieldLabel {
+                      color: #201f1e;
+                    }
+                    &:hover:before {
+                      border-color: #005a9e;
+                    }
+                    &:hover:after {
+                      border-color: #005a9e;
+                    }
+                    &:focus .ms-ChoiceFieldLabel {
+                      color: #201f1e;
+                    }
+                    &:focus:before {
+                      border-color: #005a9e;
+                    }
+                    &:focus:after {
+                      border-color: #005a9e;
+                    }
+                    &:before {
+                      background-color: #ffffff;
+                      border-color: #0078d4;
+                      border-radius: 50%;
+                      border-style: solid;
+                      border-width: 1px;
+                      box-sizing: border-box;
+                      content: "";
+                      display: inline-block;
+                      font-weight: normal;
+                      height: 20px;
+                      left: 0px;
+                      position: absolute;
+                      top: 0px;
+                      transition-duration: 200ms;
+                      transition-property: border-color;
+                      transition-timing-function: cubic-bezier(.4, 0, .23, 1);
+                      width: 20px;
+                    }
+                    @media screen and (-ms-high-contrast: active){&:before {
+                      border-color: Highlight;
+                    }
+                    &:after {
+                      border-color: #0078d4;
+                      border-radius: 50%;
+                      border-style: solid;
+                      border-width: 5px;
+                      box-sizing: border-box;
+                      content: "";
+                      height: 10px;
+                      left: 5px;
+                      position: absolute;
+                      right: 0px;
+                      top: 5px;
+                      transition-duration: 200ms;
+                      transition-property: border-width;
+                      transition-timing-function: cubic-bezier(.4, 0, .23, 1);
+                      width: 10px;
+                    }
+                    @media screen and (-ms-high-contrast: active){&:after {
+                      border-color: Highlight;
+                    }
+                htmlFor="ChoiceGroup17-alpha"
+              >
+                <span
+                  className="ms-ChoiceFieldLabel"
+                  id="ChoiceGroupLabel18-alpha"
+                >
+                  Alpha
+                </span>
+              </label>
+            </div>
+          </div>
+          <div
+            className=
+                ms-ChoiceField
+                {
+                  -moz-osx-font-smoothing: grayscale;
+                  -webkit-font-smoothing: antialiased;
+                  align-items: center;
+                  border: none;
+                  box-sizing: border-box;
+                  color: #323130;
+                  display: flex;
+                  font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+                  font-size: 14px;
+                  font-weight: 400;
+                  margin-top: 8px;
+                  min-height: 26px;
+                  position: relative;
+                }
+                & .ms-ChoiceFieldLabel {
+                  display: inline-block;
+                  padding-left: 26px;
+                }
+          >
+            <div
+              className=
+                  ms-ChoiceField-wrapper
+
+            >
+              <input
+                checked={false}
+                className=
+                    ms-ChoiceField-input
+                    {
+                      height: 100%;
+                      margin-bottom: 0px;
+                      margin-left: 0px;
+                      margin-right: 0px;
+                      margin-top: 0px;
+                      opacity: 0;
+                      position: absolute;
+                      right: 0px;
+                      top: 0px;
+                      width: 100%;
+                    }
+                id="ChoiceGroup17-transparency"
+                name="ChoiceGroup17"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                type="radio"
+              />
+              <label
+                className=
+                    ms-ChoiceField-field
+                    {
+                      cursor: pointer;
+                      display: inline-block;
+                      margin-top: 0px;
+                      min-height: 20px;
+                      position: relative;
+                      user-select: none;
+                      vertical-align: top;
+                    }
+                    &:hover .ms-ChoiceFieldLabel {
+                      color: #201f1e;
+                    }
+                    &:hover:before {
+                      border-color: #323130;
+                    }
+                    &:hover:after {
+                      background-color: #605e5c;
+                      content: "";
+                      height: 10px;
+                      left: 5px;
+                      top: 5px;
+                      transition-property: background-color;
+                      width: 10px;
+                    }
+                    &:focus .ms-ChoiceFieldLabel {
+                      color: #201f1e;
+                    }
+                    &:focus:before {
+                      border-color: #323130;
+                    }
+                    &:focus:after {
+                      background-color: #605e5c;
+                      content: "";
+                      height: 10px;
+                      left: 5px;
+                      top: 5px;
+                      transition-property: background-color;
+                      width: 10px;
+                    }
+                    &:before {
+                      background-color: #ffffff;
+                      border-color: #323130;
+                      border-radius: 50%;
+                      border-style: solid;
+                      border-width: 1px;
+                      box-sizing: border-box;
+                      content: "";
+                      display: inline-block;
+                      font-weight: normal;
+                      height: 20px;
+                      left: 0px;
+                      position: absolute;
+                      top: 0px;
+                      transition-duration: 200ms;
+                      transition-property: border-color;
+                      transition-timing-function: cubic-bezier(.4, 0, .23, 1);
+                      width: 20px;
+                    }
+                    &:after {
+                      border-radius: 50%;
+                      box-sizing: border-box;
+                      content: "";
+                      height: 0px;
+                      left: 10px;
+                      position: absolute;
+                      right: 0px;
+                      transition-duration: 200ms;
+                      transition-property: border-width;
+                      transition-timing-function: cubic-bezier(.4, 0, .23, 1);
+                      width: 0px;
+                    }
+                htmlFor="ChoiceGroup17-transparency"
+              >
+                <span
+                  className="ms-ChoiceFieldLabel"
+                  id="ChoiceGroupLabel18-transparency"
+                >
+                  Transparency
+                </span>
+              </label>
+            </div>
+          </div>
+          <div
+            className=
+                ms-ChoiceField
+                {
+                  -moz-osx-font-smoothing: grayscale;
+                  -webkit-font-smoothing: antialiased;
+                  align-items: center;
+                  border: none;
+                  box-sizing: border-box;
+                  color: #323130;
+                  display: flex;
+                  font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+                  font-size: 14px;
+                  font-weight: 400;
+                  margin-top: 8px;
+                  min-height: 26px;
+                  position: relative;
+                }
+                & .ms-ChoiceFieldLabel {
+                  display: inline-block;
+                  padding-left: 26px;
+                }
+          >
+            <div
+              className=
+                  ms-ChoiceField-wrapper
+
+            >
+              <input
+                checked={false}
+                className=
+                    ms-ChoiceField-input
+                    {
+                      height: 100%;
+                      margin-bottom: 0px;
+                      margin-left: 0px;
+                      margin-right: 0px;
+                      margin-top: 0px;
+                      opacity: 0;
+                      position: absolute;
+                      right: 0px;
+                      top: 0px;
+                      width: 100%;
+                    }
+                id="ChoiceGroup17-none"
+                name="ChoiceGroup17"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                type="radio"
+              />
+              <label
+                className=
+                    ms-ChoiceField-field
+                    {
+                      cursor: pointer;
+                      display: inline-block;
+                      margin-top: 0px;
+                      min-height: 20px;
+                      position: relative;
+                      user-select: none;
+                      vertical-align: top;
+                    }
+                    &:hover .ms-ChoiceFieldLabel {
+                      color: #201f1e;
+                    }
+                    &:hover:before {
+                      border-color: #323130;
+                    }
+                    &:hover:after {
+                      background-color: #605e5c;
+                      content: "";
+                      height: 10px;
+                      left: 5px;
+                      top: 5px;
+                      transition-property: background-color;
+                      width: 10px;
+                    }
+                    &:focus .ms-ChoiceFieldLabel {
+                      color: #201f1e;
+                    }
+                    &:focus:before {
+                      border-color: #323130;
+                    }
+                    &:focus:after {
+                      background-color: #605e5c;
+                      content: "";
+                      height: 10px;
+                      left: 5px;
+                      top: 5px;
+                      transition-property: background-color;
+                      width: 10px;
+                    }
+                    &:before {
+                      background-color: #ffffff;
+                      border-color: #323130;
+                      border-radius: 50%;
+                      border-style: solid;
+                      border-width: 1px;
+                      box-sizing: border-box;
+                      content: "";
+                      display: inline-block;
+                      font-weight: normal;
+                      height: 20px;
+                      left: 0px;
+                      position: absolute;
+                      top: 0px;
+                      transition-duration: 200ms;
+                      transition-property: border-color;
+                      transition-timing-function: cubic-bezier(.4, 0, .23, 1);
+                      width: 20px;
+                    }
+                    &:after {
+                      border-radius: 50%;
+                      box-sizing: border-box;
+                      content: "";
+                      height: 0px;
+                      left: 10px;
+                      position: absolute;
+                      right: 0px;
+                      transition-duration: 200ms;
+                      transition-property: border-width;
+                      transition-timing-function: cubic-bezier(.4, 0, .23, 1);
+                      width: 0px;
+                    }
+                htmlFor="ChoiceGroup17-none"
+              >
+                <span
+                  className="ms-ChoiceFieldLabel"
+                  id="ChoiceGroupLabel18-none"
+                >
+                  None
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

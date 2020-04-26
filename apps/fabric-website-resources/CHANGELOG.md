@@ -1,7 +1,103 @@
 # Change Log - @uifabric/fabric-website-resources
 
-This log was last generated on Thu, 03 Oct 2019 23:14:46 GMT and should not be manually modified.
+This log was last generated on Thu, 16 Apr 2020 04:01:45 GMT and should not be manually modified.
 
+<!-- Start content -->
+
+## [7.6.36](https://github.com/microsoft/fluentui/tree/@uifabric/fabric-website-resources_v7.6.36)
+
+Thu, 16 Apr 2020 04:01:45 GMT 
+[Compare changes](https://github.com/microsoft/fluentui/compare/@uifabric/fabric-website-resources_v7.6.34..@uifabric/fabric-website-resources_v7.6.36)
+
+### Patches
+
+- Readme: Fabric=>Fluent wording updates ([PR #12508](https://github.com/microsoft/fluentui/pull/12508) by elcraig@microsoft.com)
+
+## 7.6.25
+Wed, 25 Mar 2020 12:30:04 GMT
+
+### Patches
+
+- Updating docs for Fluent transition (mgodbolt@microsoft.com)
+## 7.6.24
+Mon, 23 Mar 2020 12:28:29 GMT
+
+### Patches
+
+- Replace OfficeDev/office-ui-fabric-react with microsoft/fluentui (elcraig@microsoft.com)
+## 7.6.20
+Tue, 17 Mar 2020 12:28:58 GMT
+
+### Patches
+
+- remove all usages of BaseComponent and initializeFocusRects (xgao@microsoft.com)
+## 7.6.7
+Tue, 25 Feb 2020 12:25:39 GMT
+
+### Patches
+
+- Delete PositioningContainer docs (elcraig@microsoft.com)
+## 7.6.3
+Wed, 19 Feb 2020 12:21:05 GMT
+
+### Patches
+
+- Add syncpack and synchronize dependencies. Refresh fluent import. (jagore@microsoft.com)
+## 7.6.0
+Wed, 12 Feb 2020 12:24:27 GMT
+
+### Minor changes
+
+- Replacing deprecated StatelessComponent references with FunctionComponent. (Humberto.Morimoto@microsoft.com)
+## 7.5.0
+Tue, 28 Jan 2020 12:43:24 GMT
+
+### Minor changes
+
+- Add dark theme to fabric resources site. (marygans@microsoft.com)
+## 7.4.6
+Fri, 17 Jan 2020 02:32:17 GMT
+
+### Patches
+
+- Update tslib minver to first version containing __spreadArrays helper due to changes in how TS emits spreads. (jagore@microsoft.com)
+## 7.4.5
+Thu, 09 Jan 2020 12:34:52 GMT
+
+### Patches
+
+- Fix bundling issues (elcraig@microsoft.com)
+## 7.4.4
+Wed, 08 Jan 2020 17:02:57 GMT
+
+### Patches
+
+- bumping load-themed-styles to take advantage of es6 version of it (kchau@microsoft.com)
+- For API reference pages, show all property tables on page load (elcraig@microsoft.com)
+## 7.4.3
+Tue, 10 Dec 2019 12:34:47 GMT
+
+### Patches
+
+- Theme Designer: use createTheme and Customizations.applySettings instead of loadTheme (aneeshak@microsoft.com)
+## 7.4.2
+Thu, 28 Nov 2019 12:32:23 GMT
+
+### Patches
+
+- Update fabric core dependency in other package.json files (v-mare@microsoft.com)
+## 7.4.1
+Wed, 06 Nov 2019 12:34:07 GMT
+
+### Patches
+
+- Remove some unused things (elcraig@microsoft.com)
+## 7.4.0
+Mon, 28 Oct 2019 22:25:45 GMT
+
+### Minor changes
+
+- Enable live editor and update bundling (elcraig@microsoft.com)
 ## 7.3.2
 Thu, 03 Oct 2019 23:14:46 GMT
 
@@ -5145,4 +5241,3 @@ Mon, 05 Dec 2016 04:02:30 GMT
 ### Minor changes
 
 - Facepile: updating default behavior.
-

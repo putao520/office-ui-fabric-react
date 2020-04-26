@@ -1,4 +1,12 @@
-import { HighContrastSelector, AnimationVariables, normalize, IStyle, getPlaceholderStyles, getGlobalClassNames } from '../../Styling';
+import {
+  HighContrastSelector,
+  AnimationVariables,
+  normalize,
+  IStyle,
+  getPlaceholderStyles,
+  getGlobalClassNames,
+  getInputFocusStyle,
+} from '../../Styling';
 import { ISearchBoxStyleProps, ISearchBoxStyles } from './SearchBox.types';
 import { getRTL } from '../../Utilities';
 
@@ -7,7 +15,7 @@ const GlobalClassNames = {
   iconContainer: 'ms-SearchBox-iconContainer',
   icon: 'ms-SearchBox-icon',
   clearButton: 'ms-SearchBox-clearButton',
-  field: 'ms-SearchBox-field'
+  field: 'ms-SearchBox-field',
 };
 
 export function getStyles(props: ISearchBoxStyleProps): ISearchBoxStyles {
@@ -18,7 +26,7 @@ export function getStyles(props: ISearchBoxStyleProps): ISearchBoxStyles {
   // placeholder style constants
   const placeholderStyles: IStyle = {
     color: semanticColors.inputPlaceholderText,
-    opacity: 1
+    opacity: 1,
   };
 
   const inputIconAlt = palette.neutralSecondary;
@@ -46,45 +54,42 @@ export function getStyles(props: ISearchBoxStyleProps): ISearchBoxStyles {
         height: 32,
         selectors: {
           [HighContrastSelector]: {
-            border: '1px solid WindowText'
+            borderColor: 'WindowText',
           },
           ':hover': {
             borderColor: semanticColors.inputBorderHovered,
             selectors: {
               [HighContrastSelector]: {
-                borderColor: 'Highlight'
-              }
-            }
+                borderColor: 'Highlight',
+              },
+            },
           },
           [`:hover .${classNames.iconContainer}`]: {
-            color: semanticColors.inputIconHovered
-          }
-        }
+            color: semanticColors.inputIconHovered,
+          },
+        },
       },
       !hasFocus &&
         hasInput && {
           selectors: {
             [`:hover .${classNames.iconContainer}`]: {
-              width: 4
+              width: 4,
             },
             [`:hover .${classNames.icon}`]: {
-              opacity: 0
-            }
-          }
+              opacity: 0,
+            },
+          },
         },
       hasFocus && [
         'is-active',
         {
-          borderColor: semanticColors.inputFocusBorderAlt,
-          selectors: {
-            ':hover': {
-              borderColor: semanticColors.inputFocusBorderAlt
-            },
-            [HighContrastSelector]: {
-              borderColor: 'Highlight'
-            }
-          }
-        }
+          position: 'relative',
+        },
+        getInputFocusStyle(
+          semanticColors.inputFocusBorderAlt,
+          underlined ? 0 : effects.roundedCorner2,
+          underlined ? 'borderBottom' : 'border',
+        ),
       ],
       disabled && [
         'is-disabled',
@@ -92,8 +97,13 @@ export function getStyles(props: ISearchBoxStyleProps): ISearchBoxStyles {
           borderColor: inputBorderDisabled,
           backgroundColor: inputBackgroundDisabled,
           pointerEvents: 'none',
-          cursor: 'default'
-        }
+          cursor: 'default',
+          selectors: {
+            [HighContrastSelector]: {
+              borderColor: 'GrayText',
+            },
+          },
+        },
       ],
       underlined && [
         'is-underlined',
@@ -101,15 +111,15 @@ export function getStyles(props: ISearchBoxStyleProps): ISearchBoxStyles {
           borderWidth: '0 0 1px 0',
           borderRadius: 0,
           // Underlined SearchBox has a larger padding left to vertically align with the waffle in product
-          padding: '1px 0 1px 8px'
-        }
+          padding: '1px 0 1px 8px',
+        },
       ],
       underlined &&
         disabled && {
-          backgroundColor: 'transparent'
+          backgroundColor: 'transparent',
         },
       hasInput && 'can-clear',
-      className
+      className,
     ],
     iconContainer: [
       classNames.iconContainer,
@@ -122,29 +132,29 @@ export function getStyles(props: ISearchBoxStyleProps): ISearchBoxStyles {
         width: 32,
         textAlign: 'center',
         color: semanticColors.inputIcon,
-        cursor: 'text'
+        cursor: 'text',
       },
       hasFocus && {
-        width: 4
+        width: 4,
       },
       disabled && {
-        color: semanticColors.inputIconDisabled
+        color: semanticColors.inputIconDisabled,
       },
       !disableAnimation && {
-        transition: `width ${AnimationVariables.durationValue1}`
-      }
+        transition: `width ${AnimationVariables.durationValue1}`,
+      },
     ],
     icon: [
       classNames.icon,
       {
-        opacity: 1
+        opacity: 1,
       },
       hasFocus && {
-        opacity: 0
+        opacity: 0,
       },
       !disableAnimation && {
-        transition: `opacity ${AnimationVariables.durationValue1} 0s`
-      }
+        transition: `opacity ${AnimationVariables.durationValue1} 0s`,
+      },
     ],
     clearButton: [
       classNames.clearButton,
@@ -159,19 +169,19 @@ export function getStyles(props: ISearchBoxStyleProps): ISearchBoxStyles {
         margin: '-1px 0px',
         selectors: {
           '&:hover .ms-Button': {
-            backgroundColor: inputBackgroundHovered
+            backgroundColor: inputBackgroundHovered,
           },
           '&:hover .ms-Button-icon': {
-            color: inputIconAltHovered
+            color: inputIconAltHovered,
           },
           '.ms-Button': {
-            borderRadius: getRTL() ? '1px 0 0 1px' : '0 1px 1px 0'
+            borderRadius: getRTL(theme) ? '1px 0 0 1px' : '0 1px 1px 0',
           },
           '.ms-Button-icon': {
-            color: inputIconAlt
-          }
-        }
-      }
+            color: inputIconAlt,
+          },
+        },
+      },
     ],
     field: [
       classNames.field,
@@ -196,13 +206,13 @@ export function getStyles(props: ISearchBoxStyleProps): ISearchBoxStyles {
         // This removes the IE specific clear button in the input since we implimented our own
         selectors: {
           '::-ms-clear': {
-            display: 'none'
-          }
-        }
+            display: 'none',
+          },
+        },
       },
       disabled && {
-        color: semanticColors.disabledText
-      }
-    ]
+        color: semanticColors.disabledText,
+      },
+    ],
   };
 }

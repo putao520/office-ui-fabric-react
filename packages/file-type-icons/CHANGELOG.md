@@ -1,7 +1,79 @@
 # Change Log - @uifabric/file-type-icons
 
-This log was last generated on Fri, 27 Sep 2019 12:33:04 GMT and should not be manually modified.
+This log was last generated on Thu, 16 Apr 2020 04:01:45 GMT and should not be manually modified.
 
+<!-- Start content -->
+
+## [7.2.30](https://github.com/microsoft/fluentui/tree/@uifabric/file-type-icons_v7.2.30)
+
+Thu, 16 Apr 2020 04:01:45 GMT 
+[Compare changes](https://github.com/microsoft/fluentui/compare/@uifabric/file-type-icons_v7.2.28..@uifabric/file-type-icons_v7.2.30)
+
+### Patches
+
+- Readme: Remove section about fluent icons (should be default now); Fabric=>Fluent wording updates ([PR #12508](https://github.com/microsoft/fluentui/pull/12508) by elcraig@microsoft.com)
+- Improving the icon filetype mapping file to cover even more extensions, including those already served by Teams mobile app ([PR #12422](https://github.com/microsoft/fluentui/pull/12422) by caperez@microsoft.com)
+
+## 7.2.26
+Wed, 25 Mar 2020 12:30:04 GMT
+
+### Patches
+
+- Changing references of Fabric to Fluent (mgodbolt@microsoft.com)
+## 7.2.25
+Mon, 23 Mar 2020 12:28:29 GMT
+
+### Patches
+
+- Replace OfficeDev/office-ui-fabric-react with microsoft/fluentui (elcraig@microsoft.com)
+## 7.2.4
+Fri, 17 Jan 2020 02:32:17 GMT
+
+### Patches
+
+- Update tslib minver to first version containing __spreadArrays helper due to changes in how TS emits spreads. (jagore@microsoft.com)
+## 7.2.3
+Wed, 15 Jan 2020 00:21:25 GMT
+
+### Patches
+
+- Make news icon available (hjorturj@microsoft.com)
+## 7.2.2
+Tue, 31 Dec 2019 12:31:45 GMT
+
+### Patches
+
+- added stream icon code to getFileIconProps (azra.bandukwala@microsoft.com)
+## 7.2.1
+Tue, 17 Dec 2019 12:29:42 GMT
+
+### Patches
+
+- Refining typography and signal icon on top of Folder Icon, filetype mapping updates (caperez@microsoft.com)
+## 7.2.0
+Fri, 06 Dec 2019 12:33:21 GMT
+
+### Minor changes
+
+- Added stream to file icon types (azbanduk@microsoft.com)
+## 7.1.4
+Thu, 14 Nov 2019 12:30:52 GMT
+
+### Patches
+
+- adding a new icon size for file icons (kchau@microsoft.com)
+## 7.1.3
+Fri, 08 Nov 2019 12:30:07 GMT
+
+### Patches
+
+- Added size 24 to file type icons (v-mare@microsoft.com)
+## 7.1.2
+Tue, 15 Oct 2019 12:32:28 GMT
+
+### Patches
+
+- Fabric 7 mappings for filetypeicon cal/contact/fluid/pbids (caperez@microsoft.com)
 ## 7.1.1
 Fri, 27 Sep 2019 12:33:04 GMT
 
@@ -302,4 +374,3 @@ Mon, 04 Dec 2017 17:27:54 GMT
 ### Minor changes
 
 - Add package for file type icons
-

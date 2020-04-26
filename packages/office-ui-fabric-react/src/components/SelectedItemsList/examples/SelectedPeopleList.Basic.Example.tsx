@@ -1,15 +1,17 @@
 import * as React from 'react';
 
-import { PrimaryButton } from 'office-ui-fabric-react/lib/Button';
+import { PrimaryButton, IButtonStyles } from 'office-ui-fabric-react/lib/Button';
 import {
   IExtendedPersonaProps,
   SelectedPeopleList,
   ISelectedPeopleItemProps,
-  ExtendedSelectedItem
+  ExtendedSelectedItem,
 } from 'office-ui-fabric-react/lib/SelectedItemsList';
 import { Selection } from 'office-ui-fabric-react/lib/Selection';
 import { Stack } from 'office-ui-fabric-react/lib/Stack';
 import { people, groupOne, groupTwo } from '@uifabric/example-data';
+
+const primaryButtonStyles: Partial<IButtonStyles> = { root: { display: 'block', marginBottom: 20 } };
 
 export interface ISelectedPeopleListBasicExampleState {
   nextPersonIndex: number;
@@ -23,7 +25,7 @@ export class SelectedPeopleListBasicExample extends React.Component<{}, ISelecte
     super(props);
 
     this.state = {
-      nextPersonIndex: 0
+      nextPersonIndex: 0,
     };
     this._selection = new Selection({ onSelectionChanged: () => this.forceUpdate() });
   }
@@ -35,7 +37,7 @@ export class SelectedPeopleListBasicExample extends React.Component<{}, ISelecte
           text="Add another item"
           onClick={this._onAddItemButtonClicked}
           disabled={this.state.nextPersonIndex >= people.length}
-          styles={{ root: { display: 'block', marginBottom: 20 } }}
+          styles={primaryButtonStyles}
         />
         <Stack horizontal wrap>
           <SelectedPeopleList

@@ -1,22 +1,24 @@
 import * as React from 'react';
 import { TextField, MaskedTextField } from 'office-ui-fabric-react/lib/TextField';
-import { Stack, IStackProps } from 'office-ui-fabric-react/lib/Stack';
+import { Stack, IStackProps, IStackStyles } from 'office-ui-fabric-react/lib/Stack';
 
-export const TextFieldBasicExample: React.StatelessComponent = () => {
+const stackStyles: Partial<IStackStyles> = { root: { width: 650 } };
+
+export const TextFieldBasicExample: React.FunctionComponent = () => {
   // TextFields don't have to be inside Stacks, we're just using Stacks for layout
   const columnProps: Partial<IStackProps> = {
     tokens: { childrenGap: 15 },
-    styles: { root: { width: 300 } }
+    styles: { root: { width: 300 } },
   };
 
   return (
-    <Stack horizontal tokens={{ childrenGap: 50 }} styles={{ root: { width: 650 } }}>
+    <Stack horizontal tokens={{ childrenGap: 50 }} styles={stackStyles}>
       <Stack {...columnProps}>
         <TextField label="Standard" />
         <TextField label="Disabled" disabled defaultValue="I am disabled" />
         <TextField label="Read-only" readOnly defaultValue="I am read-only" />
         <TextField label="Required " required />
-        <TextField required />
+        <TextField ariaLabel="Required without visible label" required />
         <TextField label="With error message" errorMessage="Error message" />
       </Stack>
 

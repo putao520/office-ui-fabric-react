@@ -28,7 +28,6 @@ exports[`Component Examples renders Announced.SearchResults.Example.tsx correctl
         {
           -moz-osx-font-smoothing: grayscale;
           -webkit-font-smoothing: antialiased;
-          color: inherit;
           display: inline;
           font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
           font-size: 14px;
@@ -40,6 +39,13 @@ exports[`Component Examples renders Announced.SearchResults.Example.tsx correctl
     Turn on Narrator and type a letter or two into the TagPicker. This picker will filter added items from the search suggestions.
   </span>
   <div
+    aria-live="polite"
+    className=
+
+
+    role="status"
+  />
+  <div
     className=
         ms-BasePicker
 
@@ -47,6 +53,8 @@ exports[`Component Examples renders Announced.SearchResults.Example.tsx correctl
     onKeyDown={[Function]}
   >
     <div
+      aria-expanded={false}
+      aria-haspopup="dialog"
       className=
           ms-FocusZone
           &:focus {
@@ -56,6 +64,7 @@ exports[`Component Examples renders Announced.SearchResults.Example.tsx correctl
       onFocus={[Function]}
       onKeyDown={[Function]}
       onMouseDownCapture={[Function]}
+      role="combobox"
     >
       <div
         className="ms-SelectionZone"
@@ -75,7 +84,7 @@ exports[`Component Examples renders Announced.SearchResults.Example.tsx correctl
               {
                 align-items: center;
                 border-radius: 2px;
-                border: 1px solid #8a8886;
+                border: 1px solid #605e5c;
                 box-sizing: border-box;
                 display: flex;
                 flex-wrap: wrap;
@@ -90,25 +99,32 @@ exports[`Component Examples renders Announced.SearchResults.Example.tsx correctl
           <input
             aria-autocomplete="both"
             aria-controls=" "
-            aria-expanded={false}
-            aria-haspopup="true"
             aria-label="Tag Picker"
             autoCapitalize="off"
             autoComplete="off"
             className=
                 ms-BasePicker-input
                 {
+                  -moz-osx-font-smoothing: grayscale;
+                  -webkit-font-smoothing: antialiased;
                   align-self: flex-end;
                   background-color: transparent;
                   border-radius: 2px;
                   border: none;
+                  color: #323130;
                   flex-grow: 1;
+                  font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+                  font-size: 14px;
+                  font-weight: 400;
                   height: 30px;
                   outline: none;
                   padding-bottom: 0;
                   padding-left: 6px;
                   padding-right: 6px;
                   padding-top: 0;
+                }
+                &::-ms-clear {
+                  display: none;
                 }
             data-lpignore={true}
             onBlur={[Function]}
@@ -120,7 +136,7 @@ exports[`Component Examples renders Announced.SearchResults.Example.tsx correctl
             onFocus={[Function]}
             onInput={[Function]}
             onKeyDown={[Function]}
-            role="combobox"
+            role="textbox"
             spellCheck={false}
             value=""
           />

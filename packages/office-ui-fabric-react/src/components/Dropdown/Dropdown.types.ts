@@ -6,9 +6,9 @@ import { ISelectableDroppableTextProps } from '../../utilities/selectableOption/
 import { ResponsiveMode } from '../../utilities/decorators/withResponsiveMode';
 import { IKeytipProps } from '../../Keytip';
 import { RectangleEdge } from '../../utilities/positioning';
-import { ICheckboxStyleProps } from '../Checkbox/Checkbox.types';
-import { ILabelStyleProps } from '../Label/Label.types';
-import { IPanelStyleProps } from '../Panel/Panel.types';
+import { ICheckboxStyleProps, ICheckboxStyles } from '../Checkbox/Checkbox.types';
+import { ILabelStyleProps, ILabelStyles } from '../Label/Label.types';
+import { IPanelStyleProps, IPanelStyles } from '../Panel/Panel.types';
 
 export { SelectableOptionMenuItemType as DropdownMenuItemType } from '../../utilities/selectableOption/SelectableOption.types';
 
@@ -53,11 +53,6 @@ export interface IDropdownProps extends ISelectableDroppableTextProps<IDropdown,
   onChanged?: (option: IDropdownOption, index?: number) => void;
 
   /**
-   * Callback issues when the options callout is dismissed
-   */
-  onDismiss?: () => void;
-
-  /**
    * Custom render function for the label.
    */
   onRenderLabel?: IRenderFunction<IDropdownProps>;
@@ -96,11 +91,6 @@ export interface IDropdownProps extends ISelectableDroppableTextProps<IDropdown,
    * options always getting rendered in a Panel.
    */
   responsiveMode?: ResponsiveMode;
-
-  /**
-   * Optional mode indicates if multi-choice selections is allowed.  Default to false
-   */
-  multiSelect?: boolean;
 
   /**
    * Keys that will be initially used to set selected items. This prop is used for `multiSelect`
@@ -163,7 +153,8 @@ export interface IDropdownOption extends ISelectableOption {
 }
 
 /**
- * The props needed to construct styles. This represents the simplified set of immutable things which control the class names.
+ * The props needed to construct styles.
+ * This represents the simplified set of immutable things which control the class names.
  * {@docCategory Dropdown}
  */
 export type IDropdownStyleProps = Pick<IDropdownProps, 'theme' | 'className' | 'disabled' | 'required'> & {
@@ -266,7 +257,7 @@ export interface IDropdownStyles {
 
   /**
    * Refers to the panel that hosts the Dropdown options in small viewports.
-   * Note: This will be deprecated when Panel supports JS Styling.
+   * @deprecated Use `subComponentStyles.panel` instead.
    */
   panel: IStyle;
 
@@ -282,14 +273,11 @@ export interface IDropdownStyles {
  */
 export interface IDropdownSubComponentStyles {
   /** Refers to the panel that hosts the Dropdown options in small viewports. */
-  panel: IStyleFunctionOrObject<IPanelStyleProps, any>;
-  // #5690: replace any with ILabelStyles in TS 2.9
+  panel: IStyleFunctionOrObject<IPanelStyleProps, IPanelStyles>;
 
   /** Refers to the primary label for the Dropdown. */
-  label: IStyleFunctionOrObject<ILabelStyleProps, any>;
-  // #5690: replace any with ILabelStyles in TS 2.9
+  label: IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles>;
 
-  /** Refers to the the individual dropdown item when the multiSelect prop is true. */
-  multiSelectItem: IStyleFunctionOrObject<ICheckboxStyleProps, any>;
-  // #5690: replace any with ILabelStyles in TS 2.9
+  /** Refers to the individual dropdown item when the multiSelect prop is true. */
+  multiSelectItem: IStyleFunctionOrObject<ICheckboxStyleProps, ICheckboxStyles>;
 }

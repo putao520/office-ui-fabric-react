@@ -1,7 +1,54 @@
 # Change Log - @uifabric/azure-themes
 
-This log was last generated on Wed, 11 Sep 2019 12:35:47 GMT and should not be manually modified.
+This log was last generated on Thu, 16 Apr 2020 04:01:45 GMT and should not be manually modified.
 
+<!-- Start content -->
+
+## [7.0.59](https://github.com/microsoft/fluentui/tree/@uifabric/azure-themes_v7.0.59)
+
+Thu, 16 Apr 2020 04:01:45 GMT 
+[Compare changes](https://github.com/microsoft/fluentui/compare/@uifabric/azure-themes_v7.0.50..@uifabric/azure-themes_v7.0.59)
+
+### Patches
+
+- Readme: Fabric=>Fluent wording updates ([PR #12508](https://github.com/microsoft/fluentui/pull/12508) by elcraig@microsoft.com)
+
+## 7.0.50
+Wed, 25 Mar 2020 12:30:04 GMT
+
+### Patches
+
+- Changing references of Fabric to Fluent (mgodbolt@microsoft.com)
+## 7.0.49
+Mon, 23 Mar 2020 12:28:29 GMT
+
+### Patches
+
+- Replace OfficeDev/office-ui-fabric-react with microsoft/fluentui (elcraig@microsoft.com)
+## 7.0.47
+Wed, 18 Mar 2020 12:24:00 GMT
+
+### Patches
+
+- Azure theme: Adding storybook `yarn start` workflow for helping to design and debug the Azure themes. (dzearing@microsoft.com)
+## 7.0.21
+Thu, 06 Feb 2020 12:37:34 GMT
+
+### Patches
+
+- Fix incorrect icon color for disabled contextual menu icon. (xinychen@microsoft.com)
+## 7.0.11
+Fri, 17 Jan 2020 02:32:17 GMT
+
+### Patches
+
+- Update tslib minver to first version containing __spreadArrays helper due to changes in how TS emits spreads. (jagore@microsoft.com)
+## 7.0.10
+Thu, 07 Nov 2019 12:26:32 GMT
+
+### Patches
+
+- Correct the checked checkbox background in Azure light theme. (xinychen@microsoft.com)
 ## 7.0.9
 Wed, 11 Sep 2019 12:35:47 GMT
 
@@ -138,4 +185,3 @@ Mon, 21 Jan 2019 13:36:01 GMT
 Thu, 17 Jan 2019 13:34:42 GMT
 
 *Initial release*
-

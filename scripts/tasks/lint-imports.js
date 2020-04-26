@@ -7,6 +7,7 @@
  * }} ImportErrorGroup
  *
  * @typedef {{
+ *   pathAbsolute: ImportErrorGroup;
  *   pathNotFile: ImportErrorGroup;
  *   pathRelative: ImportErrorGroup;
  *   pathDeep: ImportErrorGroup;
@@ -53,7 +54,7 @@ function lintImports() {
     // Only used in experimental examples. Will need a different approach for this to work with the editor.
     '@uifabric/foundation/lib/next/composed',
     // Imported by theming examples. Need to find a different approach.
-    '@uifabric/experiments/lib/components/CollapsibleSection/examples/CollapsibleSection.Recursive.Example'
+    '@uifabric/experiments/lib/components/CollapsibleSection/examples/CollapsibleSection.Recursive.Example',
   ];
   const allowedReexportedImports = ['@uifabric/foundation/lib/next/composed'];
   const reExportedPackages = {
@@ -61,7 +62,7 @@ function lintImports() {
     '@uifabric/icons': 'Icons',
     '@uifabric/merge-styles': 'Styling',
     '@uifabric/styling': 'Styling',
-    '@uifabric/utilities': 'Utilities'
+    '@uifabric/utilities': 'Utilities',
   };
 
   const packagesInfo = getAllPackageInfo();
@@ -75,18 +76,19 @@ function lintImports() {
     const files = _getFiles(sourcePath, /\.(ts|tsx)$/i);
     /** @type {ImportErrors} */
     const importErrors = {
+      pathAbsolute: { count: 0, matches: {} },
       pathNotFile: { count: 0, matches: {} },
       pathRelative: { count: 0, matches: {} },
       pathDeep: { count: 0, matches: {} },
       pathReExported: { count: 0, matches: {} },
       importStar: { count: 0, matches: {} },
       exportMulti: { count: 0, matches: {} },
-      exportDefault: { count: 0, matches: {} }
+      exportDefault: { count: 0, matches: {} },
     };
     /** @type {ImportStats} */
     const importStats = {
       totalImportKeywords: 0,
-      totalImportStatements: 0
+      totalImportStatements: 0,
     };
 
     for (const file of files) {
@@ -208,6 +210,8 @@ function lintImports() {
    */
   function _evaluateImport(filePath, importMatch, importErrors, isExample) {
     const importPath = importMatch[1];
+    const packageRootPath = importPath.split('/')[0];
+    const relativePath = path.relative(sourcePath, filePath);
     let fullImportPath;
     let pathIsRelative = false;
     let pathIsDeep = false;
@@ -217,8 +221,18 @@ function lintImports() {
       // import is a file path. is this a file?
       fullImportPath = _evaluateImportPath(path.dirname(filePath), importPath);
       pathIsRelative = true;
-    } else if (packagesInfo[importPath]) {
+    } else if (packagesInfo[importPath] || packagesInfo[packageRootPath]) {
       // skip the full import of packages within the monorepo
+      // filters out file paths that contain "examples", ".doc.", "exampleData"
+      const filterOut = /(examples)|(\.doc\.)|(exampleData)/gm;
+      const isAcceptedPath = filePath.match(filterOut) === null;
+      const isntAtPath = importPath[0] !== '@';
+      // checks if the import root directory is the same as the current working directory
+      const isSameDirectory = process.cwd().match(new RegExp(`(${packageRootPath})$`, 'gm'));
+
+      if (!isExample && isntAtPath && isAcceptedPath && isSameDirectory) {
+        _addError(importErrors.pathAbsolute, relativePath, importPath);
+      }
       return;
     } else {
       const pkgNameMatch = importPath.match(/^(@[\w-]+\/[\w-]+|[\w-]+)/);
@@ -239,15 +253,14 @@ function lintImports() {
         fullImportPath = _evaluateImportPath(process.cwd(), './' + importPathWithoutPkgName);
       } else {
         fullImportPath =
-          _evaluateImportPath(nodeModulesPath, './' + importPath) || _evaluateImportPath(cwdNodeModulesPath, './' + importPath);
+          _evaluateImportPath(nodeModulesPath, './' + importPath) ||
+          _evaluateImportPath(cwdNodeModulesPath, './' + importPath);
       }
 
       // A "deep" path is anything that goes further into the package than <pkg>/lib/<file>
       const allowedSegments = pkgName[0] === '@' ? 4 : 3;
       pathIsDeep = importPath.split(/\//g).length > allowedSegments;
     }
-
-    const relativePath = path.relative(sourcePath, filePath);
 
     if (!fullImportPath || fs.statSync(fullImportPath).isDirectory()) {
       _addError(importErrors.pathNotFile, relativePath, importPath);
@@ -265,7 +278,12 @@ function lintImports() {
       }
 
       if (reExportedPackages[pkgName] && !allowedReexportedImports.includes(importPath)) {
-        _addError(importErrors.pathReExported, relativePath, importPath, 'office-ui-fabric-react/lib/' + reExportedPackages[pkgName]);
+        _addError(
+          importErrors.pathReExported,
+          relativePath,
+          importPath,
+          'office-ui-fabric-react/lib/' + reExportedPackages[pkgName],
+        );
       }
 
       if (importMatch[0].startsWith('import * from') && !isScss) {
@@ -311,6 +329,8 @@ function lintImports() {
   function reportFilePathErrors(importErrors) {
     /** @type {{ [k in keyof ImportErrors]: string }} */
     const errorMessages = {
+      pathAbsolute:
+        'files are using absolute imports. Please update the following imports to use relative paths instead:',
       pathNotFile:
         '{count} import path(s) do not reference physical files. This can break AMD imports. ' +
         'Please ensure the following imports reference physical files:',
@@ -324,8 +344,9 @@ function lintImports() {
         'Please change the following imports to reference office-ui-fabric-react instead:',
       importStar:
         'example files are using "import *" which causes problems with the website example editor. Please import things by name instead.',
-      exportMulti: 'example files are exporting multiple classes/consts (or none). Please export exactly one component per example.',
-      exportDefault: 'example files are using a default export. Please use only named exports.'
+      exportMulti:
+        'example files are exporting multiple classes/consts (or none). Please export exactly one component per example.',
+      exportDefault: 'example files are using a default export. Please use only named exports.',
     };
 
     let hasError = false;
@@ -352,3 +373,8 @@ function lintImports() {
 }
 
 module.exports = lintImports;
+
+// @ts-ignore
+if (require.main === module) {
+  lintImports();
+}

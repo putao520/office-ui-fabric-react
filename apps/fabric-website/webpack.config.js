@@ -1,12 +1,16 @@
 // @ts-check
 
-module.exports = function(env) {
+module.exports = function(env, argv) {
   const path = require('path');
   const resources = require('@uifabric/build/webpack/webpack-resources');
   const { addMonacoWebpackConfig } = require('@uifabric/tsx-editor/scripts/addMonacoWebpackConfig');
   // @ts-ignore
   const version = require('./package.json').version;
-  const isProductionArg = env && env.production;
+  // production mode is either coming from env variable, CLI argument as mode or production
+  const isProductionArg =
+    (env && (env.production || env.NODE_ENV === 'production')) ||
+    argv.mode === 'production' ||
+    argv.production === true;
   const now = Date.now();
 
   // Production defaults
@@ -26,12 +30,12 @@ module.exports = function(env) {
     isProductionArg,
     addMonacoWebpackConfig({
       entry: {
-        [entryPointName]: './lib/root.js'
+        [entryPointName]: './lib/root.js',
       },
 
       output: {
         publicPath: publicPath,
-        chunkFilename: `${entryPointName}-${version}-[name]-${now}${minFileNamePart}.js`
+        chunkFilename: `${entryPointName}-${version}-[name]-${now}${minFileNamePart}.js`,
       },
 
       // The website config intentionally doesn't have React as an external because we bundle it
@@ -44,10 +48,11 @@ module.exports = function(env) {
           'office-ui-fabric-react$': path.resolve(__dirname, '../../packages/office-ui-fabric-react/lib'),
           'office-ui-fabric-react/src': path.resolve(__dirname, '../../packages/office-ui-fabric-react/src'),
           'office-ui-fabric-react/lib': path.resolve(__dirname, '../../packages/office-ui-fabric-react/lib'),
-          '@uifabric/api-docs/lib': path.resolve(__dirname, '../../packages/api-docs/lib')
-        }
-      }
+          '@uifabric/api-docs/lib': path.resolve(__dirname, '../../packages/api-docs/lib'),
+        },
+      },
     }),
-    /* only production */ isProductionArg
+    // always build the dev bundle too
+    /* only production */ false,
   );
 };

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Slider } from 'office-ui-fabric-react/lib/Slider';
-import { IStackTokens, Stack } from 'office-ui-fabric-react/lib/Stack';
+import { IStackTokens, Stack, IStackStyles } from 'office-ui-fabric-react/lib/Stack';
+
+const stackStyles: Partial<IStackStyles> = { root: { maxWidth: 300 } };
 
 export interface ISliderBasicExampleState {
   value: number;
@@ -14,16 +16,8 @@ export class SliderBasicExample extends React.Component<{}, ISliderBasicExampleS
     const stackTokens: IStackTokens = { childrenGap: 20 };
 
     return (
-      <Stack tokens={stackTokens} styles={{ root: { maxWidth: 300 } }}>
-        <Slider
-          label="Basic example"
-          min={1}
-          max={5}
-          step={1}
-          defaultValue={2}
-          showValue={true}
-          onChange={(value: number) => console.log(value)}
-        />
+      <Stack tokens={stackTokens} styles={stackStyles}>
+        <Slider />
         <Slider
           label="Snapping slider example"
           min={0}
@@ -42,7 +36,13 @@ export class SliderBasicExample extends React.Component<{}, ISliderBasicExampleS
           onChange={(value: number) => this.setState({ value })}
           showValue={true}
         />
-        <Slider label="Example with formatted value" max={100} valueFormat={(value: number) => `${value}%`} showValue={true} />
+        <Slider
+          label="Example with formatted value"
+          max={100}
+          ariaValueText={(value: number) => `${value} percent`}
+          valueFormat={(value: number) => `${value}%`}
+          showValue={true}
+        />
         <Slider label="Origin from zero" min={-5} max={5} step={1} defaultValue={2} showValue originFromZero />
       </Stack>
     );

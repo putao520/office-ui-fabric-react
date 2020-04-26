@@ -9,7 +9,7 @@ const path = require('path');
 
 // The package name can be given as a named or positional argument
 const newPackageName = /** @type {string} */ (argv.name || argv._[0]);
-const newPackageNpmName = '@uifabric/' + newPackageName;
+const newPackageNpmName = '@fluentui/' + newPackageName;
 
 if (!newPackageName) {
   console.error('Please specify a name for the new package.');
@@ -47,26 +47,19 @@ const experimentsPackageJson = JSON.parse(fs.readFileSync(experimentsPackagePath
 const steps = [
   { template: 'NpmIgnore', output: '.npmignore' },
   { template: 'Npmrc', output: '.npmrc' },
-  { template: 'ChangelogJson', output: 'CHANGELOG.json' },
-  { template: 'ChangelogMarkdown', output: 'CHANGELOG.md' },
   { template: 'License', output: 'LICENSE' },
   { template: 'Readme', output: 'README.md' },
-  { template: 'JustConfig', output: 'just.config.js' },
+  { template: 'JustConfig', output: 'just.config.ts' },
   { template: 'JestConfig', output: 'jest.config.js' },
-  { template: 'JsConfig', output: 'jsconfig.json' },
   { template: 'PackageJson', output: 'package.json' },
-  { template: 'PrettierConfig', output: 'prettier.config.js' },
   { template: 'TsConfig', output: 'tsconfig.json' },
   { template: 'TsLint', output: 'tslint.json' },
-  { template: 'WebpackConfig', output: 'webpack.config.js' },
-  { template: 'WebpackServeConfig', output: 'webpack.serve.config.js' },
-  { template: 'Tests', output: path.join('config', 'tests.js') },
-  { template: 'PreCopy', output: path.join('config', 'pre-copy.json') },
-  { template: 'IndexTs', output: path.join('src', 'index.ts') },
-  { template: 'Version', output: path.join('src', 'version.ts') },
-  { template: 'AppDefinition', output: path.join('src', 'demo', 'AppDefinition.tsx') },
-  { template: 'GettingStartedPage', output: path.join('src', 'demo', 'GettingStartedPage.tsx') },
-  { template: 'Demo', output: path.join('src', 'demo', 'index.tsx') }
+  { template: 'StorybookMain', output: '.storybook/main.js' },
+  { template: 'StorybookManager', output: '.storybook/manager.js' },
+  { template: 'StorybookPreview', output: '.storybook/preview.js' },
+  { template: 'Tests', output: 'config/tests.js' },
+  { template: 'IndexTs', output: 'src/index.ts' },
+  { template: 'Version', output: 'src/version.ts' },
 ];
 
 // Strings
@@ -107,7 +100,7 @@ function performStep(stepIndex) {
       path.join(packagePath, step.output),
       () => performStep(stepIndex + 1),
       errorUnableToOpenTemplate(mustacheTemplateName),
-      errorUnableToWriteFile(step.output)
+      errorUnableToWriteFile(step.output),
     );
   });
 }
@@ -132,7 +125,7 @@ function readFileCallback(error, data, templateName, outputFilePath, callback, r
     packageName: newPackageName,
     packageNpmName: newPackageNpmName,
     friendlyPackageName: pascalCasePackage,
-    todayDate: today
+    todayDate: today,
   };
   if (templateName.toLowerCase().indexOf('packagejson') !== -1) {
     // The package.json template has an additional tag for the version of each dependency.
@@ -179,9 +172,9 @@ function makePackage(error) {
     return;
   }
 
+  fs.mkdirSync(`${packagePath}/.storybook`);
   fs.mkdirSync(`${packagePath}/config`);
   fs.mkdirSync(`${packagePath}/src`);
-  fs.mkdirSync(`${packagePath}/src/demo`);
   fs.mkdirSync(`${packagePath}/src/components`);
 
   performStep(0);

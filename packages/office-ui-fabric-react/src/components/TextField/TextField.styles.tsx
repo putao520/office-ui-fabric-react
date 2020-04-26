@@ -1,11 +1,12 @@
 import {
   AnimationClassNames,
   getGlobalClassNames,
+  getInputFocusStyle,
   HighContrastSelector,
   IStyle,
   normalize,
   getPlaceholderStyles,
-  IconFontSizes
+  IconFontSizes,
 } from '../../Styling';
 import { ILabelStyles, ILabelStyleProps } from '../../Label';
 import { ITextFieldStyleProps, ITextFieldStyles } from './TextField.types';
@@ -28,7 +29,7 @@ const globalClassNames = {
 
   required: 'is-required',
   disabled: 'is-disabled',
-  active: 'is-active'
+  active: 'is-active',
 };
 
 function getLabelStyles(props: ITextFieldStyleProps): IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles> {
@@ -39,7 +40,7 @@ function getLabelStyles(props: ITextFieldStyleProps): IStyleFunctionOrObject<ILa
     root: [
       underlined &&
         disabled && {
-          color: palette.neutralTertiary
+          color: palette.neutralTertiary,
         },
       underlined && {
         fontSize: fonts.medium.fontSize,
@@ -47,17 +48,17 @@ function getLabelStyles(props: ITextFieldStyleProps): IStyleFunctionOrObject<ILa
         paddingLeft: 12,
         paddingRight: 0,
         lineHeight: '22px',
-        height: 32
+        height: 32,
       },
       underlined &&
         focused && {
           selectors: {
             [HighContrastSelector]: {
-              height: 31 // -1px to prevent jumpiness in HC with the increased border-width to 2px
-            }
-          }
-        }
-    ]
+              height: 31, // -1px to prevent jumpiness in HC with the increased border-width to 2px
+            },
+          },
+        },
+    ],
   });
 }
 
@@ -76,7 +77,7 @@ export function getStyles(props: ITextFieldStyleProps): ITextFieldStyles {
     resizable,
     hasErrorMessage,
     inputClassName,
-    autoAdjustHeight
+    autoAdjustHeight,
   } = props;
 
   const { semanticColors, effects, fonts } = theme;
@@ -84,14 +85,15 @@ export function getStyles(props: ITextFieldStyleProps): ITextFieldStyles {
   const classNames = getGlobalClassNames(globalClassNames, theme);
 
   const fieldPrefixSuffix: IStyle = {
-    background: semanticColors.disabledBackground, // Suffix/Prefix are not editable so the disabled slot perfectly fits.
+    // Suffix/Prefix are not editable so the disabled slot perfectly fits.
+    background: semanticColors.disabledBackground,
     color: !disabled ? semanticColors.inputPlaceholderText : semanticColors.disabledText,
     display: 'flex',
     alignItems: 'center',
     padding: '0 10px',
     lineHeight: 1,
     whiteSpace: 'nowrap',
-    flexShrink: 0
+    flexShrink: 0,
   };
 
   // placeholder style constants
@@ -99,12 +101,12 @@ export function getStyles(props: ITextFieldStyleProps): ITextFieldStyles {
     fonts.medium,
     {
       color: semanticColors.inputPlaceholderText,
-      opacity: 1
-    }
+      opacity: 1,
+    },
   ];
 
   const disabledPlaceholderStyles: IStyle = {
-    color: semanticColors.disabledText
+    color: semanticColors.disabledText,
   };
 
   return {
@@ -119,63 +121,50 @@ export function getStyles(props: ITextFieldStyleProps): ITextFieldStyles {
       underlined && classNames.underlined,
       normalize,
       {
-        position: 'relative'
+        position: 'relative',
       },
-      className
+      className,
     ],
     wrapper: [
       classNames.wrapper,
-      underlined && {
-        display: 'flex',
-        borderBottomWidth: 1,
-        borderBottomStyle: 'solid',
-        borderBottomColor: semanticColors.inputBorder,
-        width: '100%'
-      },
-      hasErrorMessage &&
-        underlined &&
-        !disabled && {
-          borderBottomColor: semanticColors.errorText,
-          selectors: {
-            ':hover': {
-              borderBottomColor: semanticColors.errorText,
-              selectors: {
-                [HighContrastSelector]: {
-                  borderBottomColor: 'Highlight'
-                }
-              }
-            }
-          }
+
+      underlined && [
+        {
+          display: 'flex',
+          borderBottom: `1px solid ${!hasErrorMessage ? semanticColors.inputBorder : semanticColors.errorText}`,
+          width: '100%',
         },
-      underlined &&
         disabled && {
-          borderBottomColor: semanticColors.disabledBackground
-        },
-      underlined &&
-        !disabled &&
-        !focused &&
-        !hasErrorMessage && {
-          selectors: {
-            ':hover': {
-              borderBottomColor: semanticColors.inputBorderHovered,
-              selectors: {
-                [HighContrastSelector]: {
-                  borderBottomColor: 'Highlight'
-                }
-              }
-            }
-          }
-        },
-      underlined &&
-        focused && {
-          borderBottomColor: !hasErrorMessage ? semanticColors.inputFocusBorderAlt : semanticColors.errorText,
+          borderBottomColor: semanticColors.disabledBackground,
           selectors: {
             [HighContrastSelector]: {
-              borderBottomWidth: 2,
-              borderBottomColor: 'Highlight'
-            }
-          }
-        }
+              borderColor: 'GrayText',
+            },
+          },
+        },
+        !disabled && {
+          selectors: {
+            ':hover': {
+              borderBottomColor: !hasErrorMessage ? semanticColors.inputBorderHovered : semanticColors.errorText,
+              selectors: {
+                [HighContrastSelector]: {
+                  borderBottomColor: 'Highlight',
+                },
+              },
+            },
+          },
+        },
+        focused && [
+          {
+            position: 'relative',
+          },
+          getInputFocusStyle(
+            !hasErrorMessage ? semanticColors.inputFocusBorderAlt : semanticColors.errorText,
+            0,
+            'borderBottom',
+          ),
+        ],
+      ],
     ],
     fieldGroup: [
       classNames.fieldGroup,
@@ -190,94 +179,93 @@ export function getStyles(props: ITextFieldStyleProps): ITextFieldStyles {
         flexDirection: 'row',
         alignItems: 'stretch',
         position: 'relative',
-        selectors: {
-          ':hover': {
-            selectors: {
-              [HighContrastSelector]: {
-                borderColor: 'Highlight'
-              }
-            }
-          }
-        }
       },
       multiline && {
         minHeight: '60px',
         height: 'auto',
-        display: 'flex'
+        display: 'flex',
       },
-      borderless && {
-        border: 'none'
-      },
+
       !focused &&
         !disabled && {
           selectors: {
             ':hover': {
-              borderColor: semanticColors.inputBorderHovered
-            }
-          }
+              borderColor: semanticColors.inputBorderHovered,
+              selectors: {
+                [HighContrastSelector]: {
+                  borderColor: 'Highlight',
+                },
+              },
+            },
+          },
         },
-      focused && {
-        borderColor: semanticColors.inputFocusBorderAlt,
+
+      focused &&
+        !underlined &&
+        getInputFocusStyle(
+          !hasErrorMessage ? semanticColors.inputFocusBorderAlt : semanticColors.errorText,
+          effects.roundedCorner2,
+        ),
+      disabled && {
+        borderColor: semanticColors.disabledBackground,
         selectors: {
           [HighContrastSelector]: {
-            borderWidth: 2,
-            borderColor: 'Highlight'
-          }
-        }
+            borderColor: 'GrayText',
+          },
+        },
+
+        cursor: 'default',
       },
-      disabled && {
-        backgroundColor: semanticColors.disabledBackground,
-        borderColor: semanticColors.disabledBackground,
-        cursor: 'default'
+      borderless && {
+        border: 'none',
       },
+      borderless &&
+        focused && {
+          border: 'none',
+          selectors: {
+            ':after': {
+              border: 'none',
+            },
+          },
+        },
       underlined && {
         flex: '1 1 0px',
         border: 'none',
-        textAlign: 'left'
+        textAlign: 'left',
       },
-      underlined &&
-        focused && {
-          selectors: {
-            [HighContrastSelector]: {
-              height: 31 // -1px to prevent jumpiness in HC with the increased border-width to 2px
-            }
-          }
-        },
       underlined &&
         disabled && {
-          backgroundColor: 'transparent'
+          backgroundColor: 'transparent',
         },
-      hasErrorMessage && {
-        borderColor: semanticColors.errorText,
-        selectors: {
-          '&:focus, &:hover': {
-            borderColor: semanticColors.errorText
-          }
-        }
-      },
+
       hasErrorMessage &&
-        focused && {
-          borderColor: semanticColors.errorText
+        !underlined && {
+          borderColor: semanticColors.errorText,
+          selectors: {
+            '&:hover': {
+              borderColor: semanticColors.errorText,
+            },
+          },
         },
       !hasLabel &&
         required && {
           selectors: {
-            ':after': {
+            ':before': {
               content: `'*'`,
               color: semanticColors.errorText,
               position: 'absolute',
               top: -5,
-              right: -10
+              right: -10,
             },
             [HighContrastSelector]: {
               selectors: {
-                ':after': {
-                  right: -14 // moving the * 4 pixel to right to alleviate border clipping in HC mode.
-                }
-              }
-            }
-          }
-        }
+                ':before': {
+                  right: -14, // moving the * 4 pixel to right to alleviate border clipping in HC mode.
+                },
+              },
+            },
+          },
+        },
     ],
     field: [
       fonts.medium,
@@ -297,17 +285,17 @@ export function getStyles(props: ITextFieldStyleProps): ITextFieldStyles {
         selectors: {
           '&:active, &:focus, &:hover': { outline: 0 },
           '::-ms-clear': {
-            display: 'none'
-          }
-        }
+            display: 'none',
+          },
+        },
       },
       getPlaceholderStyles(placeholderStyles),
       multiline &&
         !resizable && [
           classNames.unresizable,
           {
-            resize: 'none'
-          }
+            resize: 'none',
+          },
         ],
       multiline && {
         minHeight: 'inherit',
@@ -316,75 +304,74 @@ export function getStyles(props: ITextFieldStyleProps): ITextFieldStyles {
         paddingTop: 6,
         paddingBottom: 6,
         overflow: 'auto',
-        width: '100%'
+        width: '100%',
       },
       multiline &&
         autoAdjustHeight && {
-          overflow: 'hidden'
+          overflow: 'hidden',
         },
       hasIcon && {
-        paddingRight: 24
+        paddingRight: 24,
       },
       multiline &&
         hasIcon && {
-          paddingRight: 40
+          paddingRight: 40,
         },
       disabled && [
         {
           backgroundColor: semanticColors.disabledBackground,
-          borderColor: 'transparent',
-          color: semanticColors.disabledText
+          color: semanticColors.disabledText,
+          borderColor: semanticColors.disabledBackground,
         },
-        getPlaceholderStyles(disabledPlaceholderStyles)
+        getPlaceholderStyles(disabledPlaceholderStyles),
       ],
       underlined && {
-        textAlign: 'left'
+        textAlign: 'left',
       },
       focused &&
         !borderless && {
           selectors: {
             [HighContrastSelector]: {
               paddingLeft: 11,
-              paddingRight: 11
-            }
-          }
+              paddingRight: 11,
+            },
+          },
         },
       focused &&
         multiline &&
         !borderless && {
           selectors: {
             [HighContrastSelector]: {
-              paddingTop: 4 // take into consideration the 2px increased border-width (not when borderless).
-            }
-          }
+              paddingTop: 4, // take into consideration the 2px increased border-width (not when borderless).
+            },
+          },
         },
-      inputClassName
+      inputClassName,
     ],
     icon: [
       multiline && {
         paddingRight: 24,
-        paddingBottom: 8,
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
       },
       {
         pointerEvents: 'none',
         position: 'absolute',
-        bottom: 5,
+        bottom: 6,
         right: 8,
         top: 'auto',
         fontSize: IconFontSizes.medium,
-        lineHeight: 18
+        lineHeight: 18,
       },
       disabled && {
-        color: semanticColors.disabledText
-      }
+        color: semanticColors.disabledText,
+      },
     ],
     description: [
       classNames.description,
       {
         color: semanticColors.bodySubtext,
-        fontSize: fonts.xSmall.fontSize
-      }
+        fontSize: fonts.xSmall.fontSize,
+      },
     ],
     errorMessage: [
       classNames.errorMessage,
@@ -395,13 +382,13 @@ export function getStyles(props: ITextFieldStyleProps): ITextFieldStyles {
         margin: 0,
         paddingTop: 5,
         display: 'flex',
-        alignItems: 'center'
-      }
+        alignItems: 'center',
+      },
     ],
     prefix: [classNames.prefix, fieldPrefixSuffix],
     suffix: [classNames.suffix, fieldPrefixSuffix],
     subComponentStyles: {
-      label: getLabelStyles(props)
-    }
+      label: getLabelStyles(props),
+    },
   };
 }

@@ -84,15 +84,13 @@ export interface IProcessedSlotProps {
     className?: string;
 }
 
-// @public
-export type IPropsWithChildren<TProps> = TProps & {
-    children?: React.ReactNode;
-};
+// @public @deprecated
+export type IPropsWithChildren<TProps> = React.PropsWithChildren<TProps>;
 
 // @public
 export interface ISlot<TProps> {
     // (undocumented)
-    (componentProps: IPropsWithChildren<TProps> | undefined | null): ReturnType<React.FunctionComponent>;
+    (componentProps: React.PropsWithChildren<TProps> | undefined | null): ReturnType<React.FunctionComponent>;
     // (undocumented)
     isSlot?: boolean;
 }
@@ -109,7 +107,7 @@ export type ISlotDefinition<TSlots> = {
 };
 
 // @public
-export type ISlotFactory<TProps extends ValidProps, TShorthandProp extends ValidShorthand> = (componentProps: TProps & IProcessedSlotProps, userProps: ISlotProp<TProps, TShorthandProp>, slotOptions: ISlotOptions<TProps> | undefined, defaultStyles: IStyle) => ReturnType<React.FunctionComponent<TProps>>;
+export type ISlotFactory<TProps extends ValidProps, TShorthandProp extends ValidShorthand> = (componentProps: TProps & IProcessedSlotProps, userProps: ISlotProp<TProps, TShorthandProp>, slotOptions: ISlotOptions<TProps> | undefined, defaultStyles: IStyle, theme?: ITheme) => ReturnType<React.FunctionComponent<TProps>>;
 
 // @public
 export interface ISlotOptions<TProps> {
@@ -123,7 +121,7 @@ export interface ISlotOptions<TProps> {
 export type ISlotProp<TProps extends ValidProps, TShorthandProp extends ValidShorthand = never> = TShorthandProp | TProps;
 
 // @public
-export type ISlotRender<TProps> = (props: IPropsWithChildren<TProps>, defaultComponent: React.ComponentType<TProps>) => ReturnType<React.FunctionComponent<TProps>>;
+export type ISlotRender<TProps> = (props: React.PropsWithChildren<TProps>, defaultComponent: React.ComponentType<TProps>) => ReturnType<React.FunctionComponent<TProps>>;
 
 // @public
 export type ISlots<TSlots> = {
@@ -189,7 +187,7 @@ export type ITokenFunction<TViewProps, TTokens> = (props: TViewProps, theme: ITh
 export type ITokenFunctionOrObject<TViewProps, TTokens> = ITokenFunction<TViewProps, TTokens> | TTokens;
 
 // @public
-export type IViewComponent<TViewProps> = (props: IPropsWithChildren<TViewProps>) => ReturnType<React.FunctionComponent>;
+export type IViewComponent<TViewProps> = (props: React.PropsWithChildren<TViewProps>) => ReturnType<React.FunctionComponent>;
 
 export { legacyStyled }
 
@@ -206,7 +204,7 @@ export type ValidProps = object;
 export type ValidShorthand = string | number | boolean;
 
 // @public
-export function withSlots<P>(type: ISlot<P> | React.FunctionComponent<P> | string, props?: React.Attributes & P | null, ...children: React.ReactNode[]): ReturnType<React.FunctionComponent<P>>;
+export function withSlots<P>(type: ISlot<P> | React.FunctionComponent<P> | string, props?: (React.Attributes & P) | null, ...children: React.ReactNode[]): ReturnType<React.FunctionComponent<P>>;
 
 
 // (No @packageDocumentation comment for this package)

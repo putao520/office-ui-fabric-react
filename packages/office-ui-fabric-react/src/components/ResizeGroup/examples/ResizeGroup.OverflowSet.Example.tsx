@@ -1,14 +1,28 @@
 import * as React from 'react';
-import { BaseComponent } from 'office-ui-fabric-react/lib/Utilities';
 import { CommandBarButton } from 'office-ui-fabric-react/lib/Button';
 import { ResizeGroup } from 'office-ui-fabric-react/lib/ResizeGroup';
-import { OverflowSet } from 'office-ui-fabric-react/lib/OverflowSet';
+import { OverflowSet, IOverflowSetStyles } from 'office-ui-fabric-react/lib/OverflowSet';
 import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox';
 import { IContextualMenuItem } from 'office-ui-fabric-react/lib/ContextualMenu';
 import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
+import { mergeStyleSets } from 'office-ui-fabric-react';
 
-import * as stylesImport from './ResizeGroup.Example.scss';
-const styles: any = stylesImport;
+const styles = mergeStyleSets({
+  root: {
+    display: 'block',
+  },
+  resizeIsShort: {
+    width: '400px',
+  },
+  settingsGroup: {
+    paddingTop: '20px',
+  },
+  itemCountDropdown: {
+    width: '180px',
+  },
+});
+
+const overflowSetStyles: Partial<IOverflowSetStyles> = { root: { height: 40 } };
 
 export interface IOverflowData {
   primary: IContextualMenuItem[];
@@ -25,7 +39,7 @@ function generateData(count: number, cachingEnabled: boolean, checked: boolean):
       key: `item${index}`,
       name: `Item ${index}`,
       icon: icons[index % icons.length],
-      checked: checked
+      checked: checked,
     };
 
     cacheKey = cacheKey + item.key;
@@ -34,7 +48,7 @@ function generateData(count: number, cachingEnabled: boolean, checked: boolean):
 
   let result: IOverflowData = {
     primary: dataItems,
-    overflow: [] as any[]
+    overflow: [] as any[],
   };
 
   if (cachingEnabled) {
@@ -56,7 +70,7 @@ function computeCacheKey(primaryControls: IContextualMenuItem[]): string {
   return primaryControls.reduce((acc, current) => acc + current.key, '');
 }
 
-export class ResizeGroupOverflowSetExample extends BaseComponent<{}, IResizeGroupOverflowSetExampleState> {
+export class ResizeGroupOverflowSetExample extends React.Component<{}, IResizeGroupOverflowSetExampleState> {
   constructor(props: {}) {
     super(props);
     this.state = {
@@ -64,7 +78,7 @@ export class ResizeGroupOverflowSetExample extends BaseComponent<{}, IResizeGrou
       buttonsChecked: false,
       cachingEnabled: false,
       onGrowDataEnabled: false,
-      numberOfItems: 20
+      numberOfItems: 20,
     };
   }
 
@@ -83,17 +97,24 @@ export class ResizeGroupOverflowSetExample extends BaseComponent<{}, IResizeGrou
           onRenderData={data => {
             return (
               <OverflowSet
+                role="menubar"
                 items={data.primary}
                 overflowItems={data.overflow.length ? data.overflow : null}
                 onRenderItem={item => {
                   return (
-                    <CommandBarButton text={item.name} iconProps={{ iconName: item.icon }} onClick={item.onClick} checked={item.checked} />
+                    <CommandBarButton
+                      role="menuitem"
+                      text={item.name}
+                      iconProps={{ iconName: item.icon }}
+                      onClick={item.onClick}
+                      checked={item.checked}
+                    />
                   );
                 }}
                 onRenderOverflowButton={overflowItems => {
-                  return <CommandBarButton menuProps={{ items: overflowItems! }} />;
+                  return <CommandBarButton role="menuitem" menuProps={{ items: overflowItems! }} />;
                 }}
-                styles={{ root: { height: 40 } }}
+                styles={overflowSetStyles}
               />
             );
           }}
@@ -114,7 +135,7 @@ export class ResizeGroupOverflowSetExample extends BaseComponent<{}, IResizeGrou
                 { key: '50', text: '50' },
                 { key: '75', text: '75' },
                 { key: '100', text: '100' },
-                { key: '200', text: '200' }
+                { key: '200', text: '200' },
               ]}
             />
           </div>

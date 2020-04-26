@@ -7,12 +7,12 @@ const wrapperClass = mergeStyles({
   padding: 2,
   selectors: {
     '& > .ms-Shimmer-container': {
-      margin: '10px 0'
-    }
-  }
+      margin: '10px 0',
+    },
+  },
 });
 
-export const ShimmerBasicExample: React.StatelessComponent = () => {
+export const ShimmerBasicExample: React.FunctionComponent = () => {
   return (
     <Fabric className={wrapperClass}>
       Basic Shimmer with no elements provided. It defaults to a line of 16px height.
@@ -24,7 +24,7 @@ export const ShimmerBasicExample: React.StatelessComponent = () => {
         shimmerElements={[
           { type: ShimmerElementType.circle },
           { type: ShimmerElementType.gap, width: '2%' },
-          { type: ShimmerElementType.line }
+          { type: ShimmerElementType.line },
         ]}
       />
       <Shimmer
@@ -37,7 +37,7 @@ export const ShimmerBasicExample: React.StatelessComponent = () => {
           { type: ShimmerElementType.gap, width: '10%' },
           { type: ShimmerElementType.line, height: 16, width: '15%' },
           { type: ShimmerElementType.gap, width: '10%' },
-          { type: ShimmerElementType.line, height: 16 }
+          { type: ShimmerElementType.line, height: 16 },
         ]}
       />
       <Shimmer
@@ -51,7 +51,7 @@ export const ShimmerBasicExample: React.StatelessComponent = () => {
           { type: ShimmerElementType.gap, width: '10%' },
           { type: ShimmerElementType.line, height: 16, width: '15%' },
           { type: ShimmerElementType.gap, width: '10%' },
-          { type: ShimmerElementType.line, height: 16 }
+          { type: ShimmerElementType.line, height: 16 },
         ]}
       />
       Variations of vertical alignment for Circles and Lines.
@@ -67,7 +67,7 @@ export const ShimmerBasicExample: React.StatelessComponent = () => {
           { type: ShimmerElementType.gap, width: '2%' },
           { type: ShimmerElementType.line, height: 16, width: '15%' },
           { type: ShimmerElementType.gap, width: '2%' },
-          { type: ShimmerElementType.line, height: 10, verticalAlign: 'bottom' }
+          { type: ShimmerElementType.line, height: 10, verticalAlign: 'bottom' },
         ]}
       />
     </Fabric>

@@ -6,7 +6,7 @@ const GlobalClassNames = {
   callout: 'ms-DatePicker-callout',
   withLabel: 'ms-DatePicker-event--with-label',
   withoutLabel: 'ms-DatePicker-event--without-label',
-  disabled: 'msDatePickerDisabled '
+  disabled: 'msDatePickerDisabled ',
 };
 
 export const styles = (props: IDatePickerStyleProps): IDatePickerStyles => {
@@ -14,13 +14,14 @@ export const styles = (props: IDatePickerStyleProps): IDatePickerStyles => {
   const { palette, semanticColors } = theme;
   const classNames = getGlobalClassNames(GlobalClassNames, theme);
 
-  const DatePickerEvent: IStyle = {
+  const DatePickerIcon: IStyle = {
     color: palette.neutralSecondary,
     fontSize: FontSizes.icon,
     lineHeight: '18px',
     pointerEvents: 'none',
     position: 'absolute',
-    right: '9px'
+    right: '4px',
+    padding: '5px',
   };
 
   return {
@@ -30,41 +31,41 @@ export const styles = (props: IDatePickerStyleProps): IDatePickerStyles => {
         position: 'relative',
         selectors: {
           '& input[readonly]': {
-            cursor: 'pointer'
+            cursor: 'pointer',
           },
           input: {
             selectors: {
               '::-ms-clear': {
-                display: 'none'
-              }
-            }
-          }
-        }
+                display: 'none',
+              },
+            },
+          },
+        },
       },
       disabled && {
         selectors: {
           '& input[readonly]': {
-            cursor: 'default'
-          }
-        }
-      }
+            cursor: 'default',
+          },
+        },
+      },
     ],
     callout: [classNames.callout],
     icon: [
-      DatePickerEvent,
-      !label && [classNames.withoutLabel, { top: '7px' }],
-      label && [classNames.withLabel, { bottom: '5px' }],
+      DatePickerIcon,
+      label ? classNames.withLabel : classNames.withoutLabel,
+      { paddingTop: '7px' },
       !disabled && [
         classNames.disabled,
         {
           pointerEvents: 'initial',
-          cursor: 'pointer'
-        }
+          cursor: 'pointer',
+        },
       ],
       disabled && {
         color: semanticColors.disabledText,
-        cursor: 'default'
-      }
-    ]
+        cursor: 'default',
+      },
+    ],
   };
 };

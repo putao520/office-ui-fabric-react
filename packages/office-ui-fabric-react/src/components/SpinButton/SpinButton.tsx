@@ -4,7 +4,6 @@ import { Label } from '../../Label';
 import { Icon } from '../../Icon';
 import {
   initializeComponentRef,
-  initializeFocusRects,
   warnMutuallyExclusive,
   Async,
   getId,
@@ -12,7 +11,9 @@ import {
   customizable,
   calculatePrecision,
   precisionRound,
-  mergeAriaAttributeValues
+  mergeAriaAttributeValues,
+  getNativeProps,
+  divProperties,
 } from '../../Utilities';
 import { ISpinButton, ISpinButtonProps } from './SpinButton.types';
 import { Position } from '../../utilities/positioning';
@@ -23,7 +24,7 @@ import { KeytipData } from '../../KeytipData';
 export enum KeyboardSpinDirection {
   down = -1,
   notSpinning = 0,
-  up = 1
+  up = 1,
 }
 
 export interface ISpinButtonState {
@@ -44,8 +45,12 @@ export interface ISpinButtonState {
   keyboardSpinDirection: KeyboardSpinDirection;
 }
 
+// TODO (Fabric Next): remove default min/max values (issue #11358).
 export type DefaultProps = Required<
-  Pick<ISpinButtonProps, 'step' | 'min' | 'max' | 'disabled' | 'labelPosition' | 'label' | 'incrementButtonIcon' | 'decrementButtonIcon'>
+  Pick<
+    ISpinButtonProps,
+    'step' | 'min' | 'max' | 'disabled' | 'labelPosition' | 'label' | 'incrementButtonIcon' | 'decrementButtonIcon'
+  >
 >;
 
 /** Internal only props */
@@ -61,7 +66,7 @@ export class SpinButton extends React.Component<ISpinButtonProps, ISpinButtonSta
     labelPosition: Position.start,
     label: '',
     incrementButtonIcon: { iconName: 'ChevronUpSmall' },
-    decrementButtonIcon: { iconName: 'ChevronDownSmall' }
+    decrementButtonIcon: { iconName: 'ChevronDownSmall' },
   };
 
   private _async: Async;
@@ -81,10 +86,9 @@ export class SpinButton extends React.Component<ISpinButtonProps, ISpinButtonSta
     super(props);
 
     initializeComponentRef(this);
-    initializeFocusRects();
 
     warnMutuallyExclusive('SpinButton', props, {
-      value: 'defaultValue'
+      value: 'defaultValue',
     });
 
     const value = props.value || props.defaultValue || String(props.min) || '0';
@@ -96,7 +100,7 @@ export class SpinButton extends React.Component<ISpinButtonProps, ISpinButtonSta
     this.state = {
       isFocused: false,
       value: value,
-      keyboardSpinDirection: KeyboardSpinDirection.notSpinning
+      keyboardSpinDirection: KeyboardSpinDirection.notSpinning,
     };
 
     this._async = new Async(this);
@@ -117,14 +121,14 @@ export class SpinButton extends React.Component<ISpinButtonProps, ISpinButtonSta
   // tslint:disable-next-line function-name
   public UNSAFE_componentWillReceiveProps(newProps: ISpinButtonProps): void {
     this._lastValidValue = this.state.value;
-    let value: string = newProps.value ? newProps.value : String(newProps.min);
+    let value: string = newProps.value !== undefined ? newProps.value : String(newProps.min);
     if (newProps.defaultValue) {
       value = String(Math.max(newProps.min as number, Math.min(newProps.max as number, Number(newProps.defaultValue))));
     }
 
     if (newProps.value !== undefined) {
       this.setState({
-        value: value
+        value: value,
       });
     }
     this._precision = this._calculatePrecision(newProps as ISpinButtonProps & DefaultProps);
@@ -142,7 +146,6 @@ export class SpinButton extends React.Component<ISpinButtonProps, ISpinButtonSta
       incrementButtonAriaLabel,
       decrementButtonIcon,
       decrementButtonAriaLabel,
-      title,
       ariaLabel,
       ariaDescribedBy,
       styles: customStyles,
@@ -156,14 +159,27 @@ export class SpinButton extends React.Component<ISpinButtonProps, ISpinButtonSta
       keytipProps,
       className,
       inputProps,
-      iconButtonProps
+      iconButtonProps,
     } = this.props as ISpinButtonInternalProps;
 
     const { isFocused, value, keyboardSpinDirection } = this.state;
 
     const classNames = this.props.getClassNames
       ? this.props.getClassNames(theme!, disabled, isFocused, keyboardSpinDirection, labelPosition, className)
-      : getClassNames(getStyles(theme!, customStyles), disabled, isFocused, keyboardSpinDirection, labelPosition, className);
+      : getClassNames(
+          getStyles(theme!, customStyles),
+          disabled,
+          isFocused,
+          keyboardSpinDirection,
+          labelPosition,
+          className,
+        );
+
+    const nativeProps = getNativeProps<React.HTMLAttributes<HTMLDivElement>>(this.props, divProperties, [
+      'onBlur',
+      'onFocus',
+      'className',
+    ]);
 
     return (
       <div className={classNames.root}>
@@ -180,8 +196,8 @@ export class SpinButton extends React.Component<ISpinButtonProps, ISpinButtonSta
         <KeytipData keytipProps={keytipProps} disabled={disabled}>
           {(keytipAttributes: any): JSX.Element => (
             <div
+              {...nativeProps}
               className={classNames.spinButtonWrapper}
-              title={title && title}
               aria-label={ariaLabel && ariaLabel}
               aria-posinset={ariaPositionInSet}
               aria-setsize={ariaSetSize}
@@ -197,7 +213,9 @@ export class SpinButton extends React.Component<ISpinButtonProps, ISpinButtonSta
                 autoComplete="off"
                 role="spinbutton"
                 aria-labelledby={label && this._labelId}
-                aria-valuenow={!isNaN(Number(ariaValueNow)) ? ariaValueNow : !isNaN(Number(value)) ? Number(value) : undefined}
+                aria-valuenow={
+                  !isNaN(Number(ariaValueNow)) ? ariaValueNow : !isNaN(Number(value)) ? Number(value) : undefined
+                }
                 aria-valuetext={ariaValueText ? ariaValueText : isNaN(Number(value)) ? value : undefined}
                 aria-valuemin={min}
                 aria-valuemax={max}
@@ -207,7 +225,7 @@ export class SpinButton extends React.Component<ISpinButtonProps, ISpinButtonSta
                 onFocus={this._onFocus}
                 onKeyDown={this._handleKeyDown}
                 onKeyUp={this._handleKeyUp}
-                readOnly={disabled}
+                disabled={disabled}
                 aria-disabled={disabled}
                 data-lpignore={true}
                 data-ktp-execute-target={keytipAttributes['data-ktp-execute-target']}
@@ -378,7 +396,11 @@ export class SpinButton extends React.Component<ISpinButtonProps, ISpinButtonSta
    * @param event - the event that fired
    */
   private _validate = (event: React.FocusEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>): void => {
-    if (this.state.value !== undefined && this._valueToValidate !== undefined && this._valueToValidate !== this._lastValidValue) {
+    if (
+      this.state.value !== undefined &&
+      this._valueToValidate !== undefined &&
+      this._valueToValidate !== this._lastValidValue
+    ) {
       const newValue = this._onValidate!(this._valueToValidate, event);
       if (newValue) {
         this._lastValidValue = newValue;
@@ -398,7 +420,7 @@ export class SpinButton extends React.Component<ISpinButtonProps, ISpinButtonSta
     const value: string = element.value;
     this._valueToValidate = value;
     this.setState({
-      value: value
+      value: value,
     });
   };
 
@@ -408,7 +430,11 @@ export class SpinButton extends React.Component<ISpinButtonProps, ISpinButtonSta
    * when spinning in response to a mouseDown
    * @param stepFunction - function to use to step by
    */
-  private _updateValue = (shouldSpin: boolean, stepDelay: number, stepFunction: (value: string) => string | void): void => {
+  private _updateValue = (
+    shouldSpin: boolean,
+    stepDelay: number,
+    stepFunction: (value: string) => string | void,
+  ): void => {
     const newValue: string | void = stepFunction(this.state.value);
     if (newValue) {
       this._lastValidValue = newValue;
@@ -471,7 +497,6 @@ export class SpinButton extends React.Component<ISpinButtonProps, ISpinButtonSta
         this._updateValue(false /* shouldSpin */, this._initialStepDelay, this._onDecrement!);
         break;
       case KeyCodes.enter:
-      case KeyCodes.tab:
         this._validate(event);
         break;
       case KeyCodes.escape:

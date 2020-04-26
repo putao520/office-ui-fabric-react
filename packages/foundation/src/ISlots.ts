@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { IStyle } from '@uifabric/styling';
-import { IComponentStyles, IPropsWithChildren } from './IComponent';
+import { IStyle, ITheme } from '@uifabric/styling';
+import { IComponentStyles } from './IComponent';
 
 /**
  * Signature of components that have component factories.
@@ -12,13 +12,17 @@ export interface ISlotCreator<TProps extends ValidProps, TShorthandProp extends 
 /**
  * Slottable version of React.ComponentType.
  */
-export type ISlottableComponentType<TProps extends ValidProps, TShorthandProp extends ValidShorthand> = React.ComponentType<TProps> &
-  ISlotCreator<TProps, TShorthandProp>;
+export type ISlottableComponentType<
+  TProps extends ValidProps,
+  TShorthandProp extends ValidShorthand
+> = React.ComponentType<TProps> & ISlotCreator<TProps, TShorthandProp>;
 
 /**
  * Slottable version of React.ReactType.
  */
-export type ISlottableReactType<TProps extends ValidProps, TShorthandProp extends ValidShorthand> = React.ElementType<TProps> &
+export type ISlottableReactType<TProps extends ValidProps, TShorthandProp extends ValidShorthand> = React.ElementType<
+  TProps
+> &
   ISlotCreator<TProps, TShorthandProp>;
 
 /**
@@ -37,7 +41,7 @@ export type ISlotDefinition<TSlots> = { [slot in keyof TSlots]: React.ElementTyp
  * Created Slot structure used for rendering by components.
  */
 export interface ISlot<TProps> {
-  (componentProps: IPropsWithChildren<TProps> | undefined | null): ReturnType<React.FunctionComponent>;
+  (componentProps: React.PropsWithChildren<TProps> | undefined | null): ReturnType<React.FunctionComponent>;
   isSlot?: boolean;
 }
 
@@ -48,7 +52,8 @@ export type ISlotFactory<TProps extends ValidProps, TShorthandProp extends Valid
   componentProps: TProps & IProcessedSlotProps,
   userProps: ISlotProp<TProps, TShorthandProp>,
   slotOptions: ISlotOptions<TProps> | undefined,
-  defaultStyles: IStyle
+  defaultStyles: IStyle,
+  theme?: ITheme,
 ) => ReturnType<React.FunctionComponent<TProps>>;
 
 /**
@@ -104,7 +109,9 @@ export interface IDefaultSlotProps<TSlots> {
  */
 // TODO: Constrain TProps more clearly (notably also exclude Functions) once this TS PR is merged:
 // https://github.com/Microsoft/TypeScript/pull/29317
-export type ISlotProp<TProps extends ValidProps, TShorthandProp extends ValidShorthand = never> = TShorthandProp | TProps;
+export type ISlotProp<TProps extends ValidProps, TShorthandProp extends ValidShorthand = never> =
+  | TShorthandProp
+  | TProps;
 
 /**
  * Defines the slot options object for all slot props:
@@ -122,6 +129,6 @@ export interface ISlotOptions<TProps> {
  * Content rendering provided by component.
  */
 export type ISlotRender<TProps> = (
-  props: IPropsWithChildren<TProps>,
-  defaultComponent: React.ComponentType<TProps>
+  props: React.PropsWithChildren<TProps>,
+  defaultComponent: React.ComponentType<TProps>,
 ) => ReturnType<React.FunctionComponent<TProps>>;

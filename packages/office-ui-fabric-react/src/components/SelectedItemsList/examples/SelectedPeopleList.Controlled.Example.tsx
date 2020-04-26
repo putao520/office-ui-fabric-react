@@ -1,22 +1,28 @@
 import * as React from 'react';
 
-import { PrimaryButton } from 'office-ui-fabric-react/lib/Button';
+import { PrimaryButton, IButtonStyles } from 'office-ui-fabric-react/lib/Button';
 import {
   IExtendedPersonaProps,
   SelectedPeopleList,
   ISelectedPeopleItemProps,
-  ExtendedSelectedItem
+  ExtendedSelectedItem,
 } from 'office-ui-fabric-react/lib/SelectedItemsList';
 import { Selection } from 'office-ui-fabric-react/lib/Selection';
-import { Stack } from 'office-ui-fabric-react/lib/Stack';
+import { Stack, IStackStyles } from 'office-ui-fabric-react/lib/Stack';
 import { people, groupOne, groupTwo } from '@uifabric/example-data';
+
+const primaryButtonStyles: Partial<IButtonStyles> = { root: { display: 'block', marginBottom: 20 } };
+const stackStyles: Partial<IStackStyles> = { root: { maxWidth: '100%' } };
 
 export interface ISelectedPeopleListControlledExampleState {
   currentSelectedItems: IExtendedPersonaProps[];
   nextPersonIndex: number;
 }
 
-export class SelectedPeopleListControlledExample extends React.Component<{}, ISelectedPeopleListControlledExampleState> {
+export class SelectedPeopleListControlledExample extends React.Component<
+  {},
+  ISelectedPeopleListControlledExampleState
+> {
   private _selectionList = React.createRef<SelectedPeopleList>();
   private _selection: Selection;
 
@@ -25,7 +31,7 @@ export class SelectedPeopleListControlledExample extends React.Component<{}, ISe
 
     this.state = {
       currentSelectedItems: [people[40]],
-      nextPersonIndex: 0
+      nextPersonIndex: 0,
     };
     this._selection = new Selection({ onSelectionChanged: () => this.forceUpdate() });
   }
@@ -37,9 +43,9 @@ export class SelectedPeopleListControlledExample extends React.Component<{}, ISe
           text="Add another item"
           onClick={this._onAddItemButtonClicked}
           disabled={this.state.nextPersonIndex >= people.length}
-          styles={{ root: { display: 'block', marginBottom: 20 } }}
+          styles={primaryButtonStyles}
         />
-        <Stack horizontal wrap styles={{ root: { maxWidth: '100%' } }}>
+        <Stack horizontal wrap styles={stackStyles}>
           <SelectedPeopleList
             key="normal"
             removeButtonAriaLabel="Remove"
@@ -66,7 +72,7 @@ export class SelectedPeopleListControlledExample extends React.Component<{}, ISe
     const { nextPersonIndex, currentSelectedItems } = this.state;
     this.setState({
       currentSelectedItems: [...currentSelectedItems, people[nextPersonIndex]],
-      nextPersonIndex: nextPersonIndex + 1
+      nextPersonIndex: nextPersonIndex + 1,
     });
   };
 
@@ -86,7 +92,7 @@ export class SelectedPeopleListControlledExample extends React.Component<{}, ISe
       currentSelectedItems: currentSelectedItems
         .slice(0, indexToExpand)
         .concat(expandedItem)
-        .concat(currentSelectedItems.slice(indexToExpand + 1))
+        .concat(currentSelectedItems.slice(indexToExpand + 1)),
     });
   };
 

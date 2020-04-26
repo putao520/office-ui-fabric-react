@@ -27,7 +27,7 @@
       "stopOnEntry": false,
       "args": ["-i", "--testPathPattern=\\b${fileBasenameNoExtension}", "--watch"],
       "runtimeExecutable": null,
-      "runtimeArgs": ["--nolazy", "--debug"],
+      "runtimeArgs": ["--nolazy", "--inspect"],
       "env": {
         "NODE_ENV": "development"
       },
@@ -104,7 +104,13 @@
       "cwd": "${workspaceRoot}/apps/fabric-website",
       "runtimeExecutable": null,
       // Use the config file for fabric-website, plus command line options used in start.js
-      "args": ["--nolazy", "--debug", "--config", "${workspaceRoot}/apps/fabric-website/webpack.serve.config.js", "--open"],
+      "args": [
+        "--nolazy",
+        "--debug",
+        "--config",
+        "${workspaceRoot}/apps/fabric-website/webpack.serve.config.js",
+        "--open"
+      ],
       "env": {
         "NODE_ENV": "development"
       }
@@ -143,8 +149,8 @@
       "name": "Debug lint imports",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceRoot}/scripts/lint-imports.js",
-      "cwd": "${workspaceRoot}/packages/charting/src",
+      "program": "${workspaceRoot}/scripts/tasks/lint-imports.js",
+      "cwd": "${workspaceRoot}/packages/office-ui-fabric-react",
       "stopOnEntry": false,
       "args": ["--name", "TestComponentName"],
       "runtimeExecutable": null,
@@ -158,14 +164,19 @@
       "name": "Debug update release notes",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceRoot}/scripts/updateReleaseNotes/index.js",
+      "protocol": "inspector",
       "cwd": "${workspaceRoot}",
-      "stopOnEntry": false,
-      // For local testing, generate a personal access token (https://github.com/settings/tokens)
-      // and replace "your token here" with the token. DO NOT COMMIT YOUR TOKEN!
-      "args": ["--token", "your token here", "--patch", "--age", "20"],
-      "runtimeExecutable": null,
-      "runtimeArgs": ["--nolazy", "--debug"],
+      "args": [
+        "${workspaceRoot}/scripts/updateReleaseNotes/index.ts",
+        "--token",
+        // For local testing, generate a personal access token (https://github.com/settings/tokens)
+        // and replace "your token here" with the token. DO NOT COMMIT YOUR TOKEN!
+        "your token here",
+        "--patch",
+        "--age",
+        "10"
+      ],
+      "runtimeArgs": ["--nolazy", "--debug", "-r", "${workspaceRoot}/scripts/ts-node-register"],
       "env": {
         "NODE_ENV": "development"
       },
@@ -176,7 +187,7 @@
       "name": "Debug page json generator",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceRoot}/packages/api-docs/lib-commonjs/generatePageJsonFiles.js",
+      "program": "${workspaceRoot}/packages/api-docs/lib/generatePageJsonFiles.js",
       "cwd": "${workspaceRoot}/packages/api-docs",
       "stopOnEntry": false,
       "runtimeExecutable": null,
@@ -184,7 +195,26 @@
       "env": {
         "NODE_ENV": "development"
       },
-      "sourceMaps": true
+      "sourceMaps": true,
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Debug gulp task",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceRoot}/node_modules/gulp/bin/gulp.js",
+      "stopOnEntry": false,
+      "runtimeArgs": ["--nolazy", "--debug"],
+      // You can change the task name and cwd locally as needed
+      "args": ["build"],
+      "cwd": "${workspaceRoot}/packages/fluentui/react-northstar",
+      "env": {
+        "NODE_ENV": "development",
+        // This is used in scripts/babel/index.js to enable sourcemaps
+        "DEBUG": "1"
+      },
+      "sourceMaps": true,
+      "console": "integratedTerminal"
     }
   ]
 }

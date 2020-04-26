@@ -1,5 +1,14 @@
 import * as React from 'react';
-import { Async, KeyCodes, divProperties, doesElementContainFocus, getDocument, getNativeProps, on, getWindow } from '../../Utilities';
+import {
+  Async,
+  KeyCodes,
+  divProperties,
+  doesElementContainFocus,
+  getDocument,
+  getNativeProps,
+  on,
+  getWindow,
+} from '../../Utilities';
 import { IPopupProps } from './Popup.types';
 
 export interface IPopupState {
@@ -11,7 +20,7 @@ export interface IPopupState {
  */
 export class Popup extends React.Component<IPopupProps, IPopupState> {
   public static defaultProps: IPopupProps = {
-    shouldRestoreFocus: true
+    shouldRestoreFocus: true,
   };
 
   public _root = React.createRef<HTMLDivElement>();
@@ -33,7 +42,10 @@ export class Popup extends React.Component<IPopupProps, IPopupState> {
 
   public componentDidMount(): void {
     if (this._root.current) {
-      this._disposables.push(on(this._root.current, 'focus', this._onFocus, true), on(this._root.current, 'blur', this._onBlur, true));
+      this._disposables.push(
+        on(this._root.current, 'focus', this._onFocus, true),
+        on(this._root.current, 'blur', this._onBlur, true),
+      );
       const currentWindow = getWindow(this._root.current);
       if (currentWindow) {
         this._disposables.push(on(currentWindow, 'keydown', this._onKeyDown as any));
@@ -66,6 +78,9 @@ export class Popup extends React.Component<IPopupProps, IPopupState> {
         this._originalFocusedElement.focus();
       }
     }
+
+    // De-reference DOM Node to avoid retainment via transpiled closure of _onKeyDown
+    delete this._originalFocusedElement;
   }
 
   public render(): JSX.Element {
@@ -133,7 +148,7 @@ export class Popup extends React.Component<IPopupProps, IPopupState> {
     }
     if (this.state.needsVerticalScrollBar !== needsVerticalScrollBar) {
       this.setState({
-        needsVerticalScrollBar: needsVerticalScrollBar
+        needsVerticalScrollBar: needsVerticalScrollBar,
       });
     }
   }
@@ -143,7 +158,15 @@ export class Popup extends React.Component<IPopupProps, IPopupState> {
   };
 
   private _onBlur = (ev: FocusEvent): void => {
-    if (this._root.current && this._root.current.contains(ev.relatedTarget as HTMLElement)) {
+    /** The popup should update this._containsFocus when:
+     * relatedTarget exists AND
+     * the relatedTarget is not contained within the popup.
+     * If the relatedTarget is within the popup, that means the popup still has focus
+     * and focused moved from one element to another within the popup.
+     * If relatedTarget is undefined or null that usually means that a
+     * keyboard event occured and focus didn't change
+     */
+    if (this._root.current && ev.relatedTarget && !this._root.current.contains(ev.relatedTarget as HTMLElement)) {
       this._containsFocus = false;
     }
   };

@@ -8,7 +8,7 @@ const argv = process.argv.slice(2);
 if (argv.length < 1) {
   console.log(`Usage:
 
-  yarn buildto [packagename] [--min]
+  yarn buildto [packagename]
 
 This command builds all packages up to and including "packagename". The package name can actually be a substring.
 If multiple packages matched the pattern, they will all be built (along with their dependencies).`);
@@ -36,12 +36,17 @@ if (!allPackages[project]) {
 
 const scopes = [];
 foundProjects.forEach(projectName => {
+  // --scope limits build to a specified package
   scopes.push('--scope');
   scopes.push(projectName);
 });
 
-// Lerna has many flags, --scope limits build to a specified package while --include-filtered-Dependencies makes the build include dependencies
+// --include-filtered-Dependencies makes the build include dependencies
 // --stream allows the build to proceed in parallel but still in order
-spawnSync(process.execPath, [lernaBin, 'run', 'build', ...scopes, '--include-filtered-dependencies', '--stream', '--', ...rest], {
-  stdio: 'inherit'
-});
+spawnSync(
+  process.execPath,
+  [lernaBin, 'run', 'build', ...scopes, '--include-filtered-dependencies', '--stream', '--', ...rest],
+  {
+    stdio: 'inherit',
+  },
+);

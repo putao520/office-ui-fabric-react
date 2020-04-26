@@ -1,22 +1,32 @@
 import { getWindow, isIE11 } from 'office-ui-fabric-react/lib/Utilities';
-import { getMonacoConfig } from '@uifabric/monaco-editor/lib/configureEnvironment';
+import { isConfigAvailable } from '@uifabric/monaco-editor/lib/configureEnvironment';
 import { isExampleValid } from '../transpiler/exampleParser';
 import { getSetting } from './settings';
 import { IBasicPackageGroup } from '../interfaces/packageGroup';
 
-export function isEditorSupported(code: string, supportedPackages: IBasicPackageGroup[]): boolean {
+export function isEditorSupported(code: string, supportedPackages: IBasicPackageGroup[], propValue?: boolean): boolean {
   const win = getWindow();
+
+  // The editor won't work at all unless:
+  // - Not server-side rendering
+  // - Required environment config available
+  // - Web worker available
+  if (!(win && isConfigAvailable() && typeof Worker !== 'undefined')) {
+    return false;
+  }
+
+  // The setting to force attempting to load the editor or not overrides preferred conditions
+  const useEditor = getSetting('useEditor');
+  if (useEditor) {
+    return useEditor !== '0';
+  }
+
+  // Preferred conditions
   return (
-    // Not server-side rendering
-    !!win &&
-    // Required environment config available
-    !!getMonacoConfig() &&
-    // Opt-out query param or session storage is not set
-    getSetting('useEditor') !== '0' &&
-    // Not IE 11
+    // Respect prop disabling the editor
+    propValue !== false &&
+    // Not IE 11 ()
     !isIE11() &&
-    // Web worker available
-    typeof Worker !== 'undefined' &&
     // No immediate issues detected in example (or exceptions thrown from parsing)
     isExampleValid(code, supportedPackages)
   );

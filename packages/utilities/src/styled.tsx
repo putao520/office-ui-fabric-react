@@ -46,12 +46,12 @@ export function styled<
   TStyleProps,
   TStyleSet extends IStyleSet<TStyleSet>
 >(
-  Component: React.ComponentClass<TComponentProps> | React.StatelessComponent<TComponentProps>,
+  Component: React.ComponentClass<TComponentProps> | React.FunctionComponent<TComponentProps>,
   baseStyles: IStyleFunctionOrObject<TStyleProps, TStyleSet>,
   getProps?: (props: TComponentProps) => Partial<TComponentProps>,
   customizable?: ICustomizableProps,
-  pure?: boolean
-): React.StatelessComponent<TComponentProps> {
+  pure?: boolean,
+): React.FunctionComponent<TComponentProps> {
   customizable = customizable || { scope: '', fields: undefined };
 
   const { scope, fields = DefaultFields } = customizable;
@@ -96,12 +96,14 @@ export function styled<
 
     private _updateStyles(customizedStyles: IStyleFunctionOrObject<TStyleProps, TStyleSet>): void {
       // tslint:disable-next-line:no-any
-      if (!this._styles || customizedStyles !== (this._styles as any).__cachedInputs__[1] || !!this.props.styles) {
+      const cache = (this._styles && (this._styles as any).__cachedInputs__) || [];
+      if (!this._styles || customizedStyles !== cache[1] || this.props.styles !== cache[2]) {
         // Cache the customized styles.
         // this._customizedStyles = customizedStyles;
 
         // Using styled components as the Component arg will result in nested styling arrays.
-        this._styles = (styleProps: TStyleProps) => concatStyleSetsWithProps(styleProps, baseStyles, customizedStyles, this.props.styles);
+        this._styles = (styleProps: TStyleProps) =>
+          concatStyleSetsWithProps(styleProps, baseStyles, customizedStyles, this.props.styles);
 
         // The __cachedInputs__ array is attached to the function and consumed by the
         // classNamesFunction as a list of keys to include for memoizing classnames.

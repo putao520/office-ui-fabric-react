@@ -1,7 +1,203 @@
 # Change Log - @uifabric/utilities
 
-This log was last generated on Mon, 07 Oct 2019 12:33:45 GMT and should not be manually modified.
+This log was last generated on Tue, 21 Apr 2020 12:34:50 GMT and should not be manually modified.
 
+<!-- Start content -->
+
+## [7.15.11](https://github.com/microsoft/fluentui/tree/@uifabric/utilities_v7.15.11)
+
+Tue, 21 Apr 2020 12:34:50 GMT 
+[Compare changes](https://github.com/microsoft/fluentui/compare/@uifabric/utilities_v7.15.10..@uifabric/utilities_v7.15.11)
+
+### Patches
+
+- classNamesFunction: fix not traversing the changed styles function ([PR #12752](https://github.com/microsoft/fluentui/pull/12752) by xgao@microsoft.com)
+- Revert changes to 'on': it should not use React events ([PR #12753](https://github.com/microsoft/fluentui/pull/12753) by behowell@microsoft.com)
+- Fix lint rule violation ([PR #12711](https://github.com/microsoft/fluentui/pull/12711) by elcraig@microsoft.com)
+
+## [7.15.10](https://github.com/microsoft/fluentui/tree/@uifabric/utilities_v7.15.10)
+
+Sun, 19 Apr 2020 02:02:09 GMT 
+[Compare changes](https://github.com/microsoft/fluentui/compare/@uifabric/utilities_v7.15.8..@uifabric/utilities_v7.15.10)
+
+### Patches
+
+- classNamesFunction: add warning on cache full ([PR #12712](https://github.com/microsoft/fluentui/pull/12712) by xgao@microsoft.com)
+
+## [7.15.8](https://github.com/microsoft/fluentui/tree/@uifabric/utilities_v7.15.8)
+
+Thu, 16 Apr 2020 12:37:31 GMT 
+[Compare changes](https://github.com/microsoft/fluentui/compare/@uifabric/utilities_v7.15.7..@uifabric/utilities_v7.15.8)
+
+### Patches
+
+- Update 'on' function to accept React events ([PR #12717](https://github.com/microsoft/fluentui/pull/12717) by behowell@microsoft.com)
+
+## [7.15.7](https://github.com/microsoft/fluentui/tree/@uifabric/utilities_v7.15.7)
+
+Thu, 16 Apr 2020 04:01:45 GMT 
+[Compare changes](https://github.com/microsoft/fluentui/compare/@uifabric/utilities_v7.15.6..@uifabric/utilities_v7.15.7)
+
+### Patches
+
+- Readme: Remove irrelevant details; Fabric=>Fluent wording updates ([PR #12508](https://github.com/microsoft/fluentui/pull/12508) by elcraig@microsoft.com)
+- merge: null values are now preserved. ([PR #12646](https://github.com/microsoft/fluentui/pull/12646) by dzearing@microsoft.com)
+
+## 7.15.6
+Thu, 09 Apr 2020 12:24:31 GMT
+
+### Patches
+
+- chore: bump @types/react (olfedias@microsoft.com)
+## 7.15.5
+Wed, 08 Apr 2020 12:28:27 GMT
+
+### Patches
+
+- Customizable: improve perf by avoid mutating styles when concatination is enabled (xgao@microsoft.com)
+- fix: fix typings for asAsync & internal usages of React.Children.map (olfedias@microsoft.com)
+## 7.15.4
+Mon, 30 Mar 2020 19:10:08 GMT
+
+### Patches
+
+- Fixing errors when building @fluentui/docs. (humbertomakotomorimoto@gmail.com)
+## 7.15.3
+Wed, 25 Mar 2020 12:30:04 GMT
+
+### Patches
+
+- Changing references of Fabric to Fluent (mgodbolt@microsoft.com)
+## 7.15.2
+Mon, 23 Mar 2020 12:28:29 GMT
+
+### Patches
+
+- Replace OfficeDev/office-ui-fabric-react with microsoft/fluentui (elcraig@microsoft.com)
+## 7.15.0
+Tue, 17 Mar 2020 12:28:58 GMT
+
+### Minor changes
+
+- deprecate BaseComonent, remove all usages of BaseComponent and initializeFocusRects (xgao@microsoft.com)
+## 7.14.1
+Mon, 16 Mar 2020 12:28:27 GMT
+
+### Patches
+
+- BaseComponent: remove initializeDir (xgao@microsoft.com)
+## 7.14.0
+Thu, 12 Mar 2020 12:35:00 GMT
+
+### Minor changes
+
+- convert initializeFocusRects to hook (xgao@microsoft.com)
+## 7.13.2
+Tue, 10 Mar 2020 12:25:14 GMT
+
+### Patches
+
+- Skips unnecessary equality check in shallowCompare to increase performance (chce@netcompany.com)
+## 7.13.1
+Sat, 07 Mar 2020 01:39:37 GMT
+
+### Patches
+
+- Cleanup: Removing 'use strict' directive in ts files since modules are emitted with a 'use strict' prologue. (humbertomakotomorimoto@gmail.com)
+## 7.13.0
+Tue, 03 Mar 2020 12:27:24 GMT
+
+### Minor changes
+
+- Turning on tslint 'deprecation' rule. (Humberto.Morimoto@microsoft.com)
+## 7.12.4
+Fri, 21 Feb 2020 12:20:14 GMT
+
+### Patches
+
+- styled: do not create new styles function if styles prop is not changed (xgao@microsoft.com)
+## 7.12.3
+Thu, 20 Feb 2020 12:20:16 GMT
+
+### Patches
+
+- fix memory leak caused by closure in scroll util (xgao@microsoft.com)
+## 7.12.2
+Wed, 19 Feb 2020 12:21:05 GMT
+
+### Patches
+
+- Add syncpack and synchronize dependencies. Refresh fluent import. (jagore@microsoft.com)
+## 7.12.1
+Mon, 17 Feb 2020 17:06:50 GMT
+
+### Patches
+
+- Utilities: forcing a publish, as the NPM outage last week did not seem to publish 7.12.1 of utilities. (dzearing@hotmail.com)
+## 7.12.0
+Wed, 12 Feb 2020 12:24:27 GMT
+
+### Minor changes
+
+- Replacing deprecated StatelessComponent references with FunctionComponent. (Humberto.Morimoto@microsoft.com)
+## 7.11.2
+Fri, 17 Jan 2020 02:32:17 GMT
+
+### Patches
+
+- Update tslib minver to first version containing __spreadArrays helper due to changes in how TS emits spreads. (jagore@microsoft.com)
+## 7.11.1
+Thu, 16 Jan 2020 12:28:58 GMT
+
+### Patches
+
+- Upgrade repo to TS3.7. (jagore@microsoft.com)
+## 7.11.0
+Mon, 13 Jan 2020 12:28:56 GMT
+
+### Minor changes
+
+- Add composeComponentAs to compose React decorator components (tmichon@microsoft.com)
+- Change focus class behavior: Alternate between 'hidden' and 'visible' classes (paflakst@microsoft.com)
+## 7.10.0
+Thu, 09 Jan 2020 12:34:52 GMT
+
+### Minor changes
+
+- memoizeFunction: The items for which callback method returned null/undefined value, null/undefined was being stored in cache for these items. In this PR, a new flag is introduced based on which the cached undefined/null value can be updated till the time non-undefined/null value is encountered for the first time. (vishgup@microsoft.com)
+## 7.9.0
+Mon, 06 Jan 2020 12:29:10 GMT
+
+### Minor changes
+
+- Selection: accept generic item type (elcraig@microsoft.com)
+### Patches
+
+- getClassNames: fix for LTR in RTL context. (jdh@microsoft.com)
+## 7.8.0
+Fri, 20 Dec 2019 12:32:45 GMT
+
+### Minor changes
+
+- scroll.ts: added allowOverscrollOnElement, alternative to allowScrollOnElement that allows body scroll on touch devices (dmitriy.ravdin@siemens.com)
+## 7.7.1
+Tue, 17 Dec 2019 12:29:42 GMT
+
+### Patches
+
+- add select to be a focusable target for focus utility (joschect@microsoft.com)
+## 7.7.0
+Sun, 15 Dec 2019 23:45:36 GMT
+
+### Minor changes
+
+- getRTL uses RTL flag on theme if present. (jdh@microsoft.com)
+## 7.6.0
+Mon, 18 Nov 2019 12:33:30 GMT
+
+### Minor changes
+
+- AutoScroll: Add horizontal scrolling (v-mare@microsoft.com)
 ## 7.5.0
 Mon, 07 Oct 2019 12:33:45 GMT
 
@@ -1456,4 +1652,3 @@ Mon, 16 Jan 2017 21:57:33 GMT
 ### Breaking changes
 
 - Introducing a new package to contain all baseline utilities that are commonly used amongst Fabric components.
-

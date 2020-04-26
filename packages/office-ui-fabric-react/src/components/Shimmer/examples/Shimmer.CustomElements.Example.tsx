@@ -7,9 +7,9 @@ const wrapperClass = mergeStyles({
   padding: 2,
   selectors: {
     '& > .ms-Shimmer-container': {
-      margin: '10px 0'
-    }
-  }
+      margin: '10px 0',
+    },
+  },
 });
 
 export class ShimmerCustomElementsExample extends React.Component<{}, {}> {
@@ -37,7 +37,7 @@ export class ShimmerCustomElementsExample extends React.Component<{}, {}> {
         <ShimmerElementsGroup
           shimmerElements={[
             { type: ShimmerElementType.line, width: 40, height: 40 },
-            { type: ShimmerElementType.gap, width: 10, height: 40 }
+            { type: ShimmerElementType.gap, width: 10, height: 40 },
           ]}
         />
         <ShimmerElementsGroup
@@ -45,7 +45,7 @@ export class ShimmerCustomElementsExample extends React.Component<{}, {}> {
           shimmerElements={[
             { type: ShimmerElementType.line, width: 300, height: 10 },
             { type: ShimmerElementType.line, width: 200, height: 10 },
-            { type: ShimmerElementType.gap, width: 100, height: 20 }
+            { type: ShimmerElementType.gap, width: 100, height: 20 },
           ]}
         />
       </div>
@@ -59,14 +59,17 @@ export class ShimmerCustomElementsExample extends React.Component<{}, {}> {
         style={{ display: 'flex' }}
       >
         <ShimmerElementsGroup
-          shimmerElements={[{ type: ShimmerElementType.circle, height: 40 }, { type: ShimmerElementType.gap, width: 10, height: 40 }]}
+          shimmerElements={[
+            { type: ShimmerElementType.circle, height: 40 },
+            { type: ShimmerElementType.gap, width: 10, height: 40 },
+          ]}
         />
         <ShimmerElementsGroup
           flexWrap={true}
           shimmerElements={[
             { type: ShimmerElementType.line, width: 400, height: 10 },
             { type: ShimmerElementType.gap, width: 100, height: 20 },
-            { type: ShimmerElementType.line, width: 500, height: 10 }
+            { type: ShimmerElementType.line, width: 500, height: 10 },
           ]}
         />
       </div>
@@ -83,7 +86,7 @@ export class ShimmerCustomElementsExample extends React.Component<{}, {}> {
           width={'90px'}
           shimmerElements={[
             { type: ShimmerElementType.line, height: 80, width: 80 },
-            { type: ShimmerElementType.gap, width: 10, height: 80 }
+            { type: ShimmerElementType.gap, width: 10, height: 80 },
           ]}
         />
         <div
@@ -91,7 +94,10 @@ export class ShimmerCustomElementsExample extends React.Component<{}, {}> {
           style={{ display: 'flex', flexWrap: 'wrap', width: '100%' }}
         >
           <ShimmerElementsGroup
-            shimmerElements={[{ type: ShimmerElementType.circle, height: 40 }, { type: ShimmerElementType.gap, width: 10, height: 40 }]}
+            shimmerElements={[
+              { type: ShimmerElementType.circle, height: 40 },
+              { type: ShimmerElementType.gap, width: 10, height: 40 },
+            ]}
           />
           <ShimmerElementsGroup
             flexWrap={true}
@@ -99,7 +105,7 @@ export class ShimmerCustomElementsExample extends React.Component<{}, {}> {
             shimmerElements={[
               { type: ShimmerElementType.line, width: '90%', height: 10 },
               { type: ShimmerElementType.gap, width: '10%', height: 20 },
-              { type: ShimmerElementType.line, width: '100%', height: 10 }
+              { type: ShimmerElementType.line, width: '100%', height: 10 },
             ]}
           />
           <ShimmerElementsGroup
@@ -110,7 +116,7 @@ export class ShimmerCustomElementsExample extends React.Component<{}, {}> {
               { type: ShimmerElementType.gap, width: '20%', height: 20 },
               { type: ShimmerElementType.line, width: '40%', height: 10, verticalAlign: 'bottom' },
               { type: ShimmerElementType.gap, width: '2%', height: 20 },
-              { type: ShimmerElementType.line, width: '58%', height: 10, verticalAlign: 'bottom' }
+              { type: ShimmerElementType.line, width: '58%', height: 10, verticalAlign: 'bottom' },
             ]}
           />
         </div>

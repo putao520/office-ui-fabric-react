@@ -1,15 +1,17 @@
 import * as React from 'react';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
-import { Stack, IStackProps } from 'office-ui-fabric-react/lib/Stack';
+import { Stack, IStackProps, IStackStyles } from 'office-ui-fabric-react/lib/Stack';
 
-export const TextFieldBorderlessExample: React.StatelessComponent = () => {
+const stackStyles: Partial<IStackStyles> = { root: { width: 650 } };
+
+export const TextFieldBorderlessExample: React.FunctionComponent = () => {
   const columnProps: Partial<IStackProps> = {
     tokens: { childrenGap: 15 },
-    styles: { root: { width: 300 } }
+    styles: { root: { width: 300 } },
   };
 
   return (
-    <Stack horizontal tokens={{ childrenGap: 50 }} styles={{ root: { width: 650 } }}>
+    <Stack horizontal tokens={{ childrenGap: 50 }} styles={stackStyles}>
       {/* Underlined fields */}
       <Stack {...columnProps}>
         <TextField label="Standard:" underlined />

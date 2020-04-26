@@ -114,7 +114,6 @@ exports[`Nav renders Nav correctly 1`] = `
                       text-decoration: none;
                       text-overflow: ellipsis;
                       user-select: none;
-                      vertical-align: top;
                       white-space: nowrap;
                       width: 100%;
                     }
@@ -169,7 +168,6 @@ exports[`Nav renders Nav correctly 1`] = `
                     }
                     .ms-Nav-compositeLink:hover & {
                       background-color: #f3f2f1;
-                      color: #323130;
                     }
                 data-is-focusable={true}
                 onClick={[Function]}

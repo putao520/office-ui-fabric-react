@@ -1,7 +1,144 @@
 # Change Log - @uifabric/example-app-base
 
-This log was last generated on Fri, 04 Oct 2019 22:19:48 GMT and should not be manually modified.
+This log was last generated on Mon, 20 Apr 2020 15:55:12 GMT and should not be manually modified.
 
+<!-- Start content -->
+
+## [7.12.39](https://github.com/microsoft/fluentui/tree/@uifabric/example-app-base_v7.12.39)
+
+Mon, 20 Apr 2020 15:55:12 GMT 
+[Compare changes](https://github.com/microsoft/fluentui/compare/@uifabric/example-app-base_v7.12.38..@uifabric/example-app-base_v7.12.39)
+
+### Patches
+
+- guard against window and location not being available ([PR #12769](https://github.com/microsoft/fluentui/pull/12769) by mgodbolt@microsoft.com)
+
+## [7.12.38](https://github.com/microsoft/fluentui/tree/@uifabric/example-app-base_v7.12.38)
+
+Sun, 19 Apr 2020 02:02:09 GMT 
+[Compare changes](https://github.com/microsoft/fluentui/compare/@uifabric/example-app-base_v7.12.34..@uifabric/example-app-base_v7.12.38)
+
+### Patches
+
+- Doc site: disable live code editing until we have a fix for the OOM errors. ([PR #12776](https://github.com/microsoft/fluentui/pull/12776) by dzearing@microsoft.com)
+
+## [7.12.34](https://github.com/microsoft/fluentui/tree/@uifabric/example-app-base_v7.12.34)
+
+Thu, 16 Apr 2020 04:01:45 GMT 
+[Compare changes](https://github.com/microsoft/fluentui/compare/@uifabric/example-app-base_v7.12.32..@uifabric/example-app-base_v7.12.34)
+
+### Patches
+
+- Readme: Recommend Storybook instead; Fabric=>Fluent wording updates ([PR #12508](https://github.com/microsoft/fluentui/pull/12508) by elcraig@microsoft.com)
+
+## 7.12.24
+Wed, 25 Mar 2020 12:30:04 GMT
+
+### Patches
+
+- Changing references of Fabric to Fluent (mgodbolt@microsoft.com)
+## 7.12.23
+Mon, 23 Mar 2020 12:28:29 GMT
+
+### Patches
+
+- Replace OfficeDev/office-ui-fabric-react with microsoft/fluentui (elcraig@microsoft.com)
+## 7.12.18
+Fri, 13 Mar 2020 12:30:22 GMT
+
+### Patches
+
+- new blog announcement, support jsx in message bar, move hig link (mgodbolt@microsoft.com)
+## 7.12.17
+Thu, 12 Mar 2020 12:35:00 GMT
+
+### Patches
+
+- use ms-Fabric--isFocusVisible instead of .is-focusVisible (xgao@microsoft.com)
+## 7.12.0
+Wed, 12 Feb 2020 12:24:27 GMT
+
+### Minor changes
+
+- Replacing deprecated StatelessComponent references with FunctionComponent. (Humberto.Morimoto@microsoft.com)
+## 7.11.5
+Thu, 23 Jan 2020 12:32:26 GMT
+
+### Patches
+
+- Fix export to codepen for fabric 7 (#9450) (xgao@microsoft.com)
+## 7.11.3
+Fri, 17 Jan 2020 02:32:17 GMT
+
+### Patches
+
+- Update tslib minver to first version containing __spreadArrays helper due to changes in how TS emits spreads. (jagore@microsoft.com)
+## 7.11.2
+Thu, 16 Jan 2020 12:28:58 GMT
+
+### Patches
+
+- Upgrade repo to TS3.7. (jagore@microsoft.com)
+- Router: don't render routes without component or getComponent. Also make INavPage.url optional since categories don't have a url. (elcraig@microsoft.com)
+## 7.11.1
+Mon, 13 Jan 2020 12:28:56 GMT
+
+### Patches
+
+- Update focus properly when scrolling to anchors (elcraig@microsoft.com)
+## 7.11.0
+Wed, 08 Jan 2020 17:02:57 GMT
+
+### Minor changes
+
+- Add ExampleCard prop for custom editorSupportedPackages, and add support for ICustomizations in IAppDefinition.customizations for customizing all ExampleCards. (elcraig@microsoft.com)
+- Fix API reference generation bugs and add support for showing all tables on load (elcraig@microsoft.com)
+### Patches
+
+- bumping load-themed-styles to take advantage of es6 version of it (kchau@microsoft.com)
+## 7.10.4
+Mon, 23 Dec 2019 12:34:01 GMT
+
+### Patches
+
+- Fix Link colors inside MessageBar (elcraig@microsoft.com)
+## 7.10.3
+Fri, 13 Dec 2019 12:30:51 GMT
+
+### Patches
+
+- Add missing aria labels on example card dropdowns (elcraig@microsoft.com)
+## 7.10.2
+Thu, 28 Nov 2019 12:32:23 GMT
+
+### Patches
+
+- Update fabric core dependency in other package.json files (v-mare@microsoft.com)
+## 7.10.1
+Wed, 13 Nov 2019 12:33:43 GMT
+
+### Patches
+
+- PlatformPicker: High Contrast support (jdh@microsoft.com)
+- Fix API reference links (elcraig@microsoft.com)
+## 7.10.0
+Tue, 12 Nov 2019 12:32:39 GMT
+
+### Minor changes
+
+- API doc table refactor (elcraig@microsoft.com)
+## 7.9.0
+Wed, 06 Nov 2019 12:34:07 GMT
+
+### Minor changes
+
+- Update API doc generation to handle deprecated messages (elcraig@microsoft.com)
+## 7.8.5
+Fri, 01 Nov 2019 01:02:38 GMT
+
+### Patches
+
+- API table: render enum descriptions as multi-line (elcraig@microsoft.com)
 ## 7.8.4
 Fri, 04 Oct 2019 22:19:48 GMT
 
@@ -1227,4 +1364,3 @@ Wed, 08 Feb 2017 05:10:53 GMT
 ### Patches
 
 - Adding new package to host all example app base code, which allows us to share common doc website code across many projects.
-

@@ -7,8 +7,8 @@ exports[`Dropdown multi-select Renders multiselect Dropdown correctly 1`] = `
 
 >
   <div
-    aria-describedby="Dropdown0-option"
     aria-expanded="false"
+    aria-haspopup="listbox"
     className=
         ms-Dropdown
         {
@@ -41,19 +41,26 @@ exports[`Dropdown multi-select Renders multiselect Dropdown correctly 1`] = `
           border-color: Highlight;
         }
         &:focus .ms-Dropdown-title {
-          border-color: #0078d4;
           color: #201f1e;
         }
         @media screen and (-ms-high-contrast: active){&:focus .ms-Dropdown-title {
-          background-color: Highlight;
+          color: Highlight;
+        }
+        &:focus:after {
+          border-radius: 2px;
+          border: 2px solid #0078d4;
+          box-sizing: border-box;
+          content: '';
+          height: 100%;
+          left: 0px;
+          pointer-events: none;
+          position: absolute;
+          top: 0px;
+          width: 100%;
+        }
+        @media screen and (-ms-high-contrast: active){&:focus:after {
           border-color: Highlight;
-          color: HighlightText;
-        }
-        @media screen and (-ms-high-contrast: active){&:focus .ms-Dropdown-title:hover {
-          color: HighlightText;
-        }
-        @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: black-on-white){&:focus .ms-Dropdown-title {
-          -ms-high-contrast-adjust: none;
+          color: Highlight;
         }
         &:active .ms-Dropdown-title {
           border-color: #0078d4;
@@ -69,10 +76,7 @@ exports[`Dropdown multi-select Renders multiselect Dropdown correctly 1`] = `
           color: #323130;
         }
         @media screen and (-ms-high-contrast: active){&:focus .ms-Dropdown-caretDown {
-          color: HighlightText;
-        }
-        @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: black-on-white){&:focus .ms-Dropdown-caretDown {
-          -ms-high-contrast-adjust: none;
+          color: Highlight;
         }
         &:active .ms-Dropdown-caretDown {
           color: #323130;
@@ -100,6 +104,7 @@ exports[`Dropdown multi-select Renders multiselect Dropdown correctly 1`] = `
     onKeyDown={[Function]}
     onKeyUp={[Function]}
     onMouseDown={[Function]}
+    role="button"
     tabIndex={0}
   >
     <span
@@ -111,7 +116,7 @@ exports[`Dropdown multi-select Renders multiselect Dropdown correctly 1`] = `
           ms-Dropdown-titleIsPlaceHolder
           {
             background-color: #ffffff;
-            border-color: #8a8886;
+            border-color: #605e5c;
             border-radius: 2px;
             border-style: solid;
             border-width: 1px;
@@ -181,8 +186,8 @@ exports[`Dropdown single-select Renders single-select Dropdown correctly 1`] = `
 
 >
   <div
-    aria-describedby="Dropdown0-option"
     aria-expanded="false"
+    aria-haspopup="listbox"
     className=
         ms-Dropdown
         {
@@ -215,19 +220,26 @@ exports[`Dropdown single-select Renders single-select Dropdown correctly 1`] = `
           border-color: Highlight;
         }
         &:focus .ms-Dropdown-title {
-          border-color: #0078d4;
           color: #201f1e;
         }
         @media screen and (-ms-high-contrast: active){&:focus .ms-Dropdown-title {
-          background-color: Highlight;
+          color: Highlight;
+        }
+        &:focus:after {
+          border-radius: 2px;
+          border: 2px solid #0078d4;
+          box-sizing: border-box;
+          content: '';
+          height: 100%;
+          left: 0px;
+          pointer-events: none;
+          position: absolute;
+          top: 0px;
+          width: 100%;
+        }
+        @media screen and (-ms-high-contrast: active){&:focus:after {
           border-color: Highlight;
-          color: HighlightText;
-        }
-        @media screen and (-ms-high-contrast: active){&:focus .ms-Dropdown-title:hover {
-          color: HighlightText;
-        }
-        @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: black-on-white){&:focus .ms-Dropdown-title {
-          -ms-high-contrast-adjust: none;
+          color: Highlight;
         }
         &:active .ms-Dropdown-title {
           border-color: #0078d4;
@@ -243,10 +255,7 @@ exports[`Dropdown single-select Renders single-select Dropdown correctly 1`] = `
           color: #323130;
         }
         @media screen and (-ms-high-contrast: active){&:focus .ms-Dropdown-caretDown {
-          color: HighlightText;
-        }
-        @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: black-on-white){&:focus .ms-Dropdown-caretDown {
-          -ms-high-contrast-adjust: none;
+          color: Highlight;
         }
         &:active .ms-Dropdown-caretDown {
           color: #323130;
@@ -287,7 +296,7 @@ exports[`Dropdown single-select Renders single-select Dropdown correctly 1`] = `
           ms-Dropdown-titleIsPlaceHolder
           {
             background-color: #ffffff;
-            border-color: #8a8886;
+            border-color: #605e5c;
             border-radius: 2px;
             border-style: solid;
             border-width: 1px;

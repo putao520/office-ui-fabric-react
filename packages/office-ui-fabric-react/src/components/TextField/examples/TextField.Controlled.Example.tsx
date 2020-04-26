@@ -1,6 +1,9 @@
 import * as React from 'react';
-import { TextField } from 'office-ui-fabric-react/lib/TextField';
+import { TextField, ITextFieldStyles } from 'office-ui-fabric-react/lib/TextField';
 import { Stack } from 'office-ui-fabric-react/lib/Stack';
+
+const textFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 300 } };
+const narrowTextFieldStyles: Partial<ITextFieldStyles> = { fieldGroup: { width: 100 } };
 
 export interface ITextFieldControlledExampleState {
   value1: string;
@@ -17,24 +20,24 @@ export class TextFieldControlledExample extends React.Component<{}, ITextFieldCo
           label="Basic controlled TextField"
           value={this.state.value1}
           onChange={this._onChange1}
-          styles={{ fieldGroup: { width: 300 } }}
+          styles={textFieldStyles}
         />
 
         <TextField
           label="Controlled TextField limiting length of value to 5"
           value={this.state.value2}
           onChange={this._onChange2}
-          styles={{ fieldGroup: { width: 100 } }}
+          styles={narrowTextFieldStyles}
         />
       </Stack>
     );
   }
 
-  private _onChange1 = (ev: React.FormEvent<HTMLInputElement>, newValue?: string) => {
+  private _onChange1 = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
     this.setState({ value1: newValue || '' });
   };
 
-  private _onChange2 = (ev: React.FormEvent<HTMLInputElement>, newValue?: string) => {
+  private _onChange2 = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
     if (!newValue || newValue.length <= 5) {
       this.setState({ value2: newValue || '' });
     } else {

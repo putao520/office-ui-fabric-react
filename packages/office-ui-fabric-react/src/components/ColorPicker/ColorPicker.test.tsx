@@ -5,12 +5,18 @@ import * as ReactTestUtils from 'react-dom/test-utils';
 
 import { ColorPicker } from './ColorPicker';
 import { ColorPickerBase, IColorPickerState } from './ColorPicker.base';
-import { IColorPickerProps } from './ColorPicker.types';
+import { IColorPickerProps, IColorPickerStrings } from './ColorPicker.types';
 import { IColor } from '../../utilities/color/interfaces';
 import { getColorFromString } from '../../utilities/color/getColorFromString';
 import { mockEvent } from '../../common/testUtilities';
+import { ColorRectangleBase } from './ColorRectangle/ColorRectangle.base';
+import { ColorSliderBase } from './ColorSlider/ColorSlider.base';
 
 const noOp = () => undefined;
+const abcdef = getColorFromString('#abcdef')!;
+const black = getColorFromString('#000000')!;
+const white = getColorFromString('#ffffff')!;
+const AEAEAE = getColorFromString('#AEAEAE')!;
 
 describe('ColorPicker', () => {
   let wrapper: ReactWrapper<IColorPickerProps, IColorPickerState, ColorPickerBase> | undefined;
@@ -30,6 +36,20 @@ describe('ColorPicker', () => {
     value: string | number;
     input?: HTMLInputElement;
     inputValue?: string;
+  }
+
+  /** Verify that the text inputs have the correct values */
+  function verifyInputs(color: IColor, alphaType: IColorPickerProps['alphaType'] = 'alpha') {
+    const hasAlpha = alphaType !== 'none';
+    const inputs = wrapper!.getDOMNode().querySelectorAll('input') as NodeListOf<HTMLInputElement>;
+    expect(inputs).toHaveLength(hasAlpha ? 5 : 4);
+    expect(inputs[0].value).toBe(color.hex);
+    expect(inputs[1].value).toBe(String(color.r));
+    expect(inputs[2].value).toBe(String(color.g));
+    expect(inputs[3].value).toBe(String(color.b));
+    if (hasAlpha) {
+      expect(inputs[4].value).toBe(String(alphaType === 'transparency' ? color.t : color.a));
+    }
   }
 
   function validateChange(opts: IValidateChangeOptions) {
@@ -60,58 +80,70 @@ describe('ColorPicker', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('uses provided color string', () => {
-    wrapper = mount(<ColorPicker color="#abcdef" onChange={noOp} componentRef={colorPickerRef} />);
+  it('renders correctly with preview', () => {
+    const component = renderer.create(<ColorPicker color="#abcdef" showPreview />);
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
 
-    expect(colorPicker!.color.hex).toEqual('abcdef');
+  it('renders correctly with transparency', () => {
+    const component = renderer.create(<ColorPicker color="#abcdef" alphaType="transparency" />);
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('uses provided color string', () => {
+    wrapper = mount(<ColorPicker color={abcdef.str} onChange={noOp} componentRef={colorPickerRef} />);
+
+    expect(colorPicker!.color.hex).toEqual(abcdef.hex);
+    verifyInputs(abcdef);
   });
 
   it('uses provided color object', () => {
-    const color = getColorFromString('#abcdef')!;
-    wrapper = mount(<ColorPicker color={color} onChange={noOp} componentRef={colorPickerRef} />);
+    wrapper = mount(<ColorPicker color={abcdef} onChange={noOp} componentRef={colorPickerRef} />);
 
-    expect(colorPicker!.color).toEqual(color);
+    expect(colorPicker!.color).toEqual(abcdef);
+    verifyInputs(abcdef);
   });
 
   it('handles color object with 0 values correctly', () => {
-    const color = getColorFromString('#000000')!;
-    wrapper = mount(<ColorPicker color={color} onChange={noOp} componentRef={colorPickerRef} />);
-
-    const inputs = wrapper.getDOMNode().querySelectorAll('.ms-TextField input') as NodeListOf<HTMLInputElement>;
-    expect(inputs[1].value).toBe('0'); // not empty string
+    wrapper = mount(<ColorPicker color={black} onChange={noOp} componentRef={colorPickerRef} />);
+    // Inputs should not have empty strings
+    verifyInputs(black);
   });
 
   it('respects color prop change', () => {
     wrapper = mount(<ColorPicker color="#abcdef" onChange={onChange} componentRef={colorPickerRef} />);
 
-    wrapper.setProps({ color: '#AEAEAE' });
-    expect(colorPicker!.color.hex).toEqual('aeaeae');
+    wrapper.setProps({ color: AEAEAE.str });
+    expect(colorPicker!.color.hex).toEqual(AEAEAE.hex);
+    verifyInputs(AEAEAE);
     // shouldn't call onChange when the consumer updates the color prop
     expect(onChange).toHaveBeenCalledTimes(0);
   });
 
   it('ignores invalid updates to color prop', () => {
-    wrapper = mount(<ColorPicker color="#abcdef" onChange={onChange} componentRef={colorPickerRef} />);
+    wrapper = mount(<ColorPicker color={abcdef} onChange={onChange} componentRef={colorPickerRef} />);
 
     wrapper.setProps({ color: 'foo' });
-    expect(colorPicker!.color.hex).toEqual('abcdef');
+    expect(colorPicker!.color.hex).toEqual(abcdef.hex);
+    verifyInputs(abcdef);
     expect(onChange).toHaveBeenCalledTimes(0);
   });
 
   it('hides alpha control slider', () => {
-    wrapper = mount(<ColorPicker color="#FFFFFF" alphaSliderHidden={true} />);
+    wrapper = mount(<ColorPicker color={white} alphaType="none" />);
 
     const alphaSlider = wrapper.find('.is-alpha');
     const tableHeaders = wrapper.find('thead td');
-    const inputs = wrapper.find('.ms-TextField');
 
     // There should only be table headers and inputs for hex, red, green, and blue (no alpha)
     expect(alphaSlider.exists()).toBe(false);
     expect(tableHeaders).toHaveLength(4);
-    expect(inputs).toHaveLength(4);
+    verifyInputs(white, 'none');
   });
 
-  it('show preview box', () => {
+  it('shows preview box', () => {
     wrapper = mount(<ColorPicker color="#FFFFFF" showPreview={true} />);
 
     const previewBox = wrapper.find('.is-preview');
@@ -120,7 +152,7 @@ describe('ColorPicker', () => {
     expect(previewBox.exists()).toBe(true);
   });
 
-  it('hide preview box', () => {
+  it('hides preview box', () => {
     wrapper = mount(<ColorPicker color="#FFFFFF" showPreview={false} />);
 
     const previewBox = wrapper.find('.is-preview');
@@ -133,37 +165,83 @@ describe('ColorPicker', () => {
     wrapper = mount(<ColorPicker color="#FFFFFF" />);
 
     const tableHeaders = wrapper.find('thead td');
-    const textHeaders = [
-      ColorPickerBase.defaultProps.hexLabel,
-      ColorPickerBase.defaultProps.redLabel,
-      ColorPickerBase.defaultProps.greenLabel,
-      ColorPickerBase.defaultProps.blueLabel,
-      ColorPickerBase.defaultProps.alphaLabel
-    ];
+    const strings = ColorPickerBase.defaultProps.strings!;
+    const textHeaders = [strings.hex, strings.red, strings.green, strings.blue, strings.alpha];
 
     tableHeaders.forEach((node, index) => {
       expect(node.text()).toEqual(textHeaders[index]);
+    });
+
+    // also check the corresponding aria labels
+    const inputs = wrapper.find('input');
+    inputs.forEach((node, index) => {
+      expect(node.prop('aria-label')).toEqual(textHeaders[index]);
     });
   });
 
-  it('renders custom RGBA/Hex strings', () => {
-    const textHeaders = ['Custom Hex', 'Custom Red', 'Custom Green', 'Custom Blue', 'Custom Alpha'];
+  it('renders custom strings', () => {
+    const fields = ['Custom Hex', 'Custom Red', 'Custom Green', 'Custom Blue', 'Custom Alpha'];
+    const customStrings: IColorPickerStrings = {
+      hex: fields[0],
+      red: fields[1],
+      green: fields[2],
+      blue: fields[3],
+      alpha: fields[4],
+      svAriaLabel: 'custom rectangle',
+      svAriaDescription: 'custom rectangle description',
+      svAriaValueFormat: 'custom rectangle value', // missing placeholders but code doesn't check for that
+      hueAriaLabel: 'custom hue',
+    };
 
-    wrapper = mount(
-      <ColorPicker
-        color="#FFFFFF"
-        hexLabel={textHeaders[0]}
-        redLabel={textHeaders[1]}
-        greenLabel={textHeaders[2]}
-        blueLabel={textHeaders[3]}
-        alphaLabel={textHeaders[4]}
-      />
-    );
+    wrapper = mount(<ColorPicker color="#FFFFFF" strings={customStrings} />);
 
     const tableHeaders = wrapper.find('thead td');
     tableHeaders.forEach((node, index) => {
-      expect(node.text()).toEqual(textHeaders[index]);
+      expect(node.text()).toEqual(fields[index]);
     });
+
+    // Check for the aria strings in the HTML of the corresponding components (simplest way
+    // to verify ColorPicker is passing custom values through correctly)
+    const rectangleHtml = wrapper.find(ColorRectangleBase).html();
+    expect(rectangleHtml).toContain(customStrings.svAriaLabel);
+    expect(rectangleHtml).toContain(customStrings.svAriaDescription);
+    expect(rectangleHtml).toContain(customStrings.svAriaValueFormat);
+
+    const sliders = wrapper.find(ColorSliderBase);
+    expect(sliders.at(0).html()).toContain(customStrings.hueAriaLabel);
+    expect(sliders.at(1).html()).toContain('Custom Alpha');
+  });
+
+  it('uses default aria label', () => {
+    wrapper = mount(<ColorPicker color="#abcdef" />);
+    expect(wrapper.getDOMNode().getAttribute('aria-label')).toBe(
+      'Color picker, Red 171 Green 205 Blue 239 Alpha 100% selected.',
+    );
+
+    wrapper.setProps({ color: 'rgba(255, 0, 0, 0.5)' });
+    expect(wrapper.getDOMNode().getAttribute('aria-label')).toBe(
+      'Color picker, Red 255 Green 0 Blue 0 Alpha 50% selected.',
+    );
+  });
+
+  it('can use custom aria label', () => {
+    wrapper = mount(<ColorPicker color="#abcdef" strings={{ rootAriaLabelFormat: 'custom color picker {0}' }} />);
+    expect(wrapper.getDOMNode().getAttribute('aria-label')).toBe(
+      'custom color picker Red 171 Green 205 Blue 239 Alpha 100%',
+    );
+  });
+
+  it('handles transparency', () => {
+    const color = getColorFromString('rgba(20, 30, 40, 0.3)')!;
+    wrapper = mount(
+      <ColorPicker color={color} alphaType="transparency" onChange={noOp} componentRef={colorPickerRef} />,
+    );
+
+    expect(colorPicker!.color).toEqual(color);
+    verifyInputs(color, 'transparency');
+
+    const tableHeaders = wrapper.find('thead td');
+    expect(tableHeaders.at(4).text()).toBe('Transparency');
   });
 
   it('keeps color value when tabbing between Hex and RGBA text inputs', () => {
@@ -176,7 +254,7 @@ describe('ColorPicker', () => {
         onChange={colorChangeSpy}
         componentRef={colorPickerRef}
         styles={{ input: inputClassName }}
-      />
+      />,
     );
 
     expect(colorPicker!.color.hex).toEqual(colorStringValue);
@@ -222,9 +300,25 @@ describe('ColorPicker', () => {
     validateChange({ calls: 3, prop: 'a', value: 50 });
   });
 
+  it('handles updating transparency text field', () => {
+    wrapper = mount(
+      <ColorPicker alphaType="transparency" onChange={onChange} color="#000000" componentRef={colorPickerRef} />,
+    );
+
+    const transparencyInput = wrapper.getDOMNode().querySelectorAll('input')[4];
+
+    ReactTestUtils.Simulate.input(transparencyInput, mockEvent('30'));
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(updatedColor!.t).toBe(30);
+    expect(colorPicker!.color.t).toBe(30);
+    expect(transparencyInput.value).toBe('30');
+    expect(updatedColor!.a).toBe(70);
+    expect(colorPicker!.color.a).toBe(70);
+  });
+
   // This has repeatedly broken in the past (really)
   it('allows updating text fields when alpha slider is hidden', () => {
-    wrapper = mount(<ColorPicker onChange={onChange} color="#000000" alphaSliderHidden componentRef={colorPickerRef} />);
+    wrapper = mount(<ColorPicker onChange={onChange} color="#000000" alphaType="none" componentRef={colorPickerRef} />);
 
     const inputs = wrapper.getDOMNode().querySelectorAll('.ms-ColorPicker-input input') as NodeListOf<HTMLInputElement>;
 
@@ -242,6 +336,21 @@ describe('ColorPicker', () => {
     validateChange({ calls: 2, prop: 'hex', value: '00ff00', input: hexInput });
     ReactTestUtils.Simulate.blur(hexInput);
     validateChange({ calls: 2, prop: 'str', value: '#00ff00' });
+  });
+
+  it('does not update if default prevented', () => {
+    let newColor: IColor | undefined;
+    const onChange1 = jest.fn((ev: React.SyntheticEvent, color: IColor) => {
+      newColor = color;
+      ev.preventDefault();
+    });
+    wrapper = mount(<ColorPicker onChange={onChange1} color="#000000" componentRef={colorPickerRef} />);
+
+    const redInput = wrapper.getDOMNode().querySelectorAll('.ms-ColorPicker-input input')[1] as HTMLInputElement;
+    ReactTestUtils.Simulate.input(redInput, mockEvent('255'));
+    expect(onChange1).toHaveBeenCalledTimes(1);
+    expect(newColor!.r).toBe(255);
+    expect(colorPicker!.color.r).toBe(0);
   });
 
   it('ignores non-numeric RGBA input', () => {
@@ -405,6 +514,20 @@ describe('ColorPicker', () => {
     validateChange({ calls: 1, prop: 'hex', value: 'aabbcc', input: hexInput });
   });
 
+  it('handles hex value too long', () => {
+    wrapper = mount(<ColorPicker onChange={onChange} color="#000000" componentRef={colorPickerRef} />);
+
+    const hexInput = wrapper.getDOMNode().querySelector('.ms-ColorPicker-input input') as HTMLInputElement;
+
+    // input too long "pasted" => use substring
+    ReactTestUtils.Simulate.input(hexInput, mockEvent('1234567'));
+    validateChange({ calls: 1, prop: 'hex', value: '123456', input: hexInput });
+
+    // invalid new value too long "pasted" => ignore
+    ReactTestUtils.Simulate.input(hexInput, mockEvent('hello world'));
+    validateChange({ calls: 1, prop: 'hex', value: '123456', input: hexInput });
+  });
+
   it('reverts to previous valid hex value on blur if input is too short', () => {
     wrapper = mount(<ColorPicker onChange={onChange} color="#abcdef" componentRef={colorPickerRef} />);
 
@@ -455,5 +578,32 @@ describe('ColorPicker', () => {
     // original value is preserved on blur
     ReactTestUtils.Simulate.blur(hexInput);
     validateChange({ calls: 0, prop: 'hex', value: 'abcdef', input: hexInput });
+  });
+
+  it('handles intermediate invalid transparency values', () => {
+    const color = getColorFromString('rgba(20, 30, 40, 0.3)')!;
+
+    wrapper = mount(
+      <ColorPicker alphaType="transparency" onChange={onChange} color={color} componentRef={colorPickerRef} />,
+    );
+
+    const transparencyInput = wrapper.getDOMNode().querySelectorAll('input')[4];
+
+    // value too large => allowed in field but onChange not called
+    ReactTestUtils.Simulate.input(transparencyInput, mockEvent('123'));
+    expect(onChange).toHaveBeenCalledTimes(0);
+    expect(colorPicker!.color.a).toBe(30); // original value
+    expect(colorPicker!.color.t).toBe(70);
+    expect(colorPicker!.state.editingColor).toEqual({ component: 't', value: '123' });
+    expect(transparencyInput.value).toBe('123');
+
+    // blur => value clamped (with correct alpha/transparency conversion)
+    ReactTestUtils.Simulate.blur(transparencyInput);
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(colorPicker!.color.t).toBe(100);
+    expect(updatedColor!.t).toBe(100);
+    expect(transparencyInput.value).toBe('100');
+    expect(colorPicker!.color.a).toBe(0);
+    expect(updatedColor!.a).toBe(0);
   });
 });

@@ -1,7 +1,74 @@
 # Change Log - @uifabric/merge-styles
 
-This log was last generated on Thu, 26 Sep 2019 12:32:32 GMT and should not be manually modified.
+This log was last generated on Fri, 17 Apr 2020 12:34:08 GMT and should not be manually modified.
 
+<!-- Start content -->
+
+## [7.11.0](https://github.com/microsoft/fluentui/tree/@uifabric/merge-styles_v7.11.0)
+
+Fri, 17 Apr 2020 12:34:08 GMT 
+[Compare changes](https://github.com/microsoft/fluentui/compare/@uifabric/merge-styles_v7.10.0..@uifabric/merge-styles_v7.11.0)
+
+### Minor changes
+
+- add WebkitTextSizeAdjust and textSizeAdjust as a valid CSS property ([PR #12751](https://github.com/microsoft/fluentui/pull/12751) by sochhay@microsoft.com)
+
+## [7.10.0](https://github.com/microsoft/fluentui/tree/@uifabric/merge-styles_v7.10.0)
+
+Thu, 16 Apr 2020 04:01:45 GMT 
+[Compare changes](https://github.com/microsoft/fluentui/compare/@uifabric/merge-styles_v7.8.11..@uifabric/merge-styles_v7.10.0)
+
+### Minor changes
+
+- Expose keytoclassnames to app, so it can be cached by the app in places like indexed db. ([PR #12651](https://github.com/microsoft/fluentui/pull/12651) by pingj@microsoft.com)
+
+### Patches
+
+- Readme: Fabric=>Fluent wording updates ([PR #12508](https://github.com/microsoft/fluentui/pull/12508) by elcraig@microsoft.com)
+- Fix typing for subComponentStyles in StyleSet ([PR #12630](https://github.com/microsoft/fluentui/pull/12630) by xgao@microsoft.com)
+
+## 7.8.11
+Mon, 30 Mar 2020 19:10:08 GMT
+
+### Patches
+
+- Fixing '_rtl not defined' error thrown when building @fluentui/docs. (humbertomakotomorimoto@gmail.com)
+## 7.8.10
+Wed, 25 Mar 2020 12:30:04 GMT
+
+### Patches
+
+- Changing references of Fabric to Fluent (mgodbolt@microsoft.com)
+## 7.8.9
+Mon, 23 Mar 2020 12:28:29 GMT
+
+### Patches
+
+- Replace OfficeDev/office-ui-fabric-react with microsoft/fluentui (elcraig@microsoft.com)
+## 7.8.3
+Wed, 22 Jan 2020 12:36:43 GMT
+
+### Patches
+
+- Documentation: Added note to merge-styles readme about working with content security policy (CSP). (elcraig@microsoft.com)
+## 7.8.2
+Fri, 17 Jan 2020 02:32:17 GMT
+
+### Patches
+
+- Update tslib minver to first version containing __spreadArrays helper due to changes in how TS emits spreads. (jagore@microsoft.com)
+## 7.8.1
+Fri, 08 Nov 2019 12:30:07 GMT
+
+### Patches
+
+- Add px units to flexBasis styling by default. Remove existing styling usage where it had no effect before this PR. (jagore@microsoft.com)
+## 7.8.0
+Mon, 21 Oct 2019 12:33:23 GMT
+
+### Minor changes
+
+- Add `-ms-overflow-style` as a valid CSS property (unindented@gmail.com)
 ## 7.7.0
 Thu, 26 Sep 2019 12:32:32 GMT
 
@@ -678,4 +745,3 @@ Fri, 29 Sep 2017 10:20:24 GMT
 ### Minor changes
 
 - The `mergeStyleSets` method's type safety was not correct. Now with significantly better type safety.
-

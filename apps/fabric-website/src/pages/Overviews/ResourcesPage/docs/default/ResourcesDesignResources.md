@@ -18,7 +18,7 @@ These SharePoint design resources provide everything you need to design your web
 
 <ul class="md-list--flex">
   <li class="mdut--half">[Designing SharePoint experiences](https://aka.ms/spdesign)</li>
-  <li class="mdut--half">[SharePoint Toolkit (XD)](https://aka.ms/sharepoint-toolkit)</li>
+  <li class="mdut--half">[SharePoint Toolkit (Figma)](https://aka.ms/SharePointToolkits/Web/Figma)</li>
 </ul>
 
 <h3 id="office-add-ins-design">Office Add-ins</h3>
@@ -35,7 +35,7 @@ The Add-ins design toolkit provides layouts for interface elements and commonly 
 
 <ul class="md-list--flex">
   <li class="mdut--half">[iOS font](https://developer.apple.com/fonts/)</li>
-  <li class="mdut--half">[Segoe UI and Fabric MDL2 external icon font](https://aka.ms/WebFluentFonts)</li>
+  <li class="mdut--half">[Segoe UI and Fluent UI MDL2 external icon font](https://aka.ms/WebFluentFonts)</li>
   <li class="mdut--half">[Android font](https://fonts.google.com/specimen/Roboto)</li>
 </ul>
 

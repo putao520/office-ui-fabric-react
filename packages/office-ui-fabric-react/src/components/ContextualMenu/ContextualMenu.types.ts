@@ -10,7 +10,11 @@ import { IWithResponsiveModeState } from '../../utilities/decorators/withRespons
 import { IContextualMenuClassNames, IMenuItemClassNames } from './ContextualMenu.classNames';
 export { DirectionalHint } from '../../common/DirectionalHint';
 import { IVerticalDividerClassNames } from '../Divider/VerticalDivider.types';
-import { IContextualMenuItemProps, IContextualMenuRenderItem, IContextualMenuItemStyleProps } from './ContextualMenuItem.types';
+import {
+  IContextualMenuItemProps,
+  IContextualMenuRenderItem,
+  IContextualMenuItemStyleProps,
+} from './ContextualMenuItem.types';
 import { IKeytipProps } from '../../Keytip';
 
 /**
@@ -20,7 +24,7 @@ export enum ContextualMenuItemType {
   Normal = 0,
   Divider = 1,
   Header = 2,
-  Section = 3
+  Section = 3,
 }
 
 /**
@@ -126,7 +130,7 @@ export interface IContextualMenuProps extends IBaseProps<IContextualMenu>, IWith
   items: IContextualMenuItem[];
 
   /**
-   * Used as `aria-labelledby` for the the menu element inside the callout.
+   * Used as `aria-labelledby` for the menu element inside the callout.
    */
   labelElementId?: string;
 
@@ -145,14 +149,17 @@ export interface IContextualMenuProps extends IBaseProps<IContextualMenu>, IWith
    * Callback when the ContextualMenu tries to close. If `dismissAll` is true then all
    * submenus will be dismissed.
    */
-  onDismiss?: (ev?: any, dismissAll?: boolean) => void;
+  onDismiss?: (ev?: React.MouseEvent | React.KeyboardEvent, dismissAll?: boolean) => void;
 
   /**
    * Click handler which is invoked if `onClick` is not passed for individual contextual
    * menu item.
    * Returning true will dismiss the menu even if `ev.preventDefault()` was called.
    */
-  onItemClick?: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem) => boolean | void;
+  onItemClick?: (
+    ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+    item?: IContextualMenuItem,
+  ) => boolean | void;
 
   /**
    * Whether this menu is a submenu of another menu.
@@ -207,6 +214,7 @@ export interface IContextualMenuProps extends IBaseProps<IContextualMenu>, IWith
    * Method to provide the classnames to style the contextual menu.
    * @deprecated Use `styles` instead to leverage mergeStyles API.
    */
+  // tslint:disable-next-line:deprecation
   getMenuClassNames?: (theme: ITheme, className?: string) => IContextualMenuClassNames;
 
   /** Custom render function for a submenu. */
@@ -226,7 +234,9 @@ export interface IContextualMenuProps extends IBaseProps<IContextualMenu>, IWith
    * Method to override the render of the individual menu items
    * @defaultvalue ContextualMenuItem
    */
-  contextualMenuItemAs?: React.ComponentClass<IContextualMenuItemProps> | React.StatelessComponent<IContextualMenuItemProps>;
+  contextualMenuItemAs?:
+    | React.ComponentClass<IContextualMenuItemProps>
+    | React.FunctionComponent<IContextualMenuItemProps>;
 
   /**
    * Props to pass down to the FocusZone.
@@ -266,8 +276,9 @@ export interface IContextualMenuProps extends IBaseProps<IContextualMenu>, IWith
 /**
  * {@docCategory ContextualMenu}
  */
-export interface IContextualMenuListProps {
-  items: IContextualMenuItem[];
+export interface IContextualMenuItemRenderProps extends IContextualMenuItem {
+  index: number;
+  focusableElementIndex: number;
   totalItemCount: number;
   hasCheckmarks: boolean;
   hasIcons: boolean;
@@ -276,9 +287,21 @@ export interface IContextualMenuListProps {
 /**
  * {@docCategory ContextualMenu}
  */
+export interface IContextualMenuListProps {
+  items: IContextualMenuItem[];
+  totalItemCount: number;
+  hasCheckmarks: boolean;
+  hasIcons: boolean;
+  defaultMenuItemRenderer: (item: IContextualMenuItemRenderProps) => React.ReactNode;
+}
+
+/**
+ * {@docCategory ContextualMenu}
+ */
 export interface IContextualMenuItem {
   /**
-   * Optional callback to access the IContextualMenuRenderItem interface. This will get passed down to ContextualMenuItem.
+   * Optional callback to access the IContextualMenuRenderItem interface.
+   * This will get passed down to ContextualMenuItem.
    */
   componentRef?: IRefObject<IContextualMenuRenderItem>;
 
@@ -289,6 +312,10 @@ export interface IContextualMenuItem {
 
   /**
    * Text description for the menu item to display
+   * If a standard dash (-) is passed in, then the item will be rendered as a divider
+   * If a dash must appear as text then the alternatives of
+   * emdash (—), figuredash (‒), or minus symbol (−)
+   * can be used instead
    */
   text?: string;
 
@@ -359,7 +386,10 @@ export interface IContextualMenuItem {
    * the click will not close the menu.
    * Returning true will dismiss the menu even if `ev.preventDefault()` was called.
    */
-  onClick?: (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem) => boolean | void;
+  onClick?: (
+    ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+    item?: IContextualMenuItem,
+  ) => boolean | void;
 
   /**
    * Navigate to this URL when the menu item is clicked.
@@ -372,7 +402,8 @@ export interface IContextualMenuItem {
   target?: string;
 
   /**
-   * Link relation setting when using `href`. If `target` is `_blank`, `rel` is defaulted to a value to prevent clickjacking.
+   * Link relation setting when using `href`.
+   * If `target` is `_blank`, `rel` is defaulted to a value to prevent clickjacking.
    */
   rel?: string;
 
@@ -400,8 +431,9 @@ export interface IContextualMenuItem {
     dividerClassName?: string,
     iconClassName?: string,
     subMenuClassName?: string,
-    primaryDisabled?: boolean
-  ) => IMenuItemClassNames;
+    primaryDisabled?: boolean,
+  ) => // tslint:disable-next-line:deprecation
+  IMenuItemClassNames;
 
   /**
    * Optional IContextualMenuItemProps overrides to customize behaviors such as item styling via `styles`.
@@ -413,6 +445,7 @@ export interface IContextualMenuItem {
    * Default value is the `getSplitButtonVerticalDividerClassNames` func defined in `ContextualMenu.classnames.ts`.
    * @defaultvalue getSplitButtonVerticalDividerClassNames
    */
+  // tslint:disable-next-line:deprecation
   getSplitButtonVerticalDividerClassNames?: (theme: ITheme) => IVerticalDividerClassNames;
 
   /**
@@ -448,8 +481,10 @@ export interface IContextualMenuItem {
    * For keyboard accessibility, the top-level rendered item should be a focusable element
    * (like an anchor or a button) or have the `data-is-focusable` property set to true.
    *
-   * The function receives a function that can be called to dismiss the menu as a second argument.
-   *  This can be used to make sure that a custom menu item click dismisses the menu.
+   * @param item - Item to render. Will typically be of type `IContextualMenuItem`.
+   * (When rendering a command bar item, will be `ICommandBarItemProps`.)
+   * @param dismissMenu - Function to dismiss the menu. Can be used to ensure that a custom menu
+   * item click dismisses the menu. (Will be undefined if rendering a command bar item.)
    */
   onRender?: (item: any, dismissMenu: (ev?: any, dismissAll?: boolean) => void) => React.ReactNode;
 
@@ -490,6 +525,10 @@ export interface IContextualMenuItem {
 
   /**
    * Text description for the menu item to display
+   * If a standard dash (-) is passed in, then the item will be rendered as a divider
+   * If a dash must appear as text then the alternatives of
+   * emdash (—), figuredash (‒), or minus symbol (−)
+   * can be used instead
    * @deprecated Use `text` instead.
    */
   name?: string;

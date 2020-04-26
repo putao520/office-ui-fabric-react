@@ -65,7 +65,7 @@ export interface INavProps {
    * Render a custom link in place of the normal one.
    * This replaces the entire button rather than simply button content
    */
-  linkAs?: IComponentAs<IButtonProps>;
+  linkAs?: IComponentAs<INavButtonProps>;
 
   /**
    * Used to customize how content inside the link tag is rendered
@@ -111,7 +111,8 @@ export interface INavProps {
    */
   expandButtonAriaLabel?: string;
   /**
-   * (Optional) The nav link selected state aria label.
+   * (Deprecated) Use ariaCurrent on links instead
+   * @deprecated Use ariaCurrent on links instead
    */
   selectedAriaLabel?: string;
 }
@@ -154,6 +155,11 @@ export interface INavLinkGroup {
    * ARIA label when group is collapsed and can be expanded.
    */
   collapseAriaLabel?: string;
+
+  /**
+   * (Optional) Any additional properties to apply to a group.
+   */
+  groupData?: any;
 }
 
 /**
@@ -212,6 +218,11 @@ export interface INavLink {
    * Whether or not the link is in an expanded state
    */
   isExpanded?: boolean;
+
+  /**
+   * Aria-current token for active nav links. Must be a valid token value, and defaults to 'page'.
+   */
+  ariaCurrent?: 'page' | 'step' | 'location' | 'date' | 'time' | 'true';
 
   /**
    * Aria label for nav link. Ignored if `collapseAriaLabel` or `expandAriaLabel` is provided.
@@ -393,4 +404,14 @@ export interface INavStyles {
    * Style set for the group content div inside group.
    */
   groupContent: IStyle;
+}
+
+/**
+ * {@docCategory Nav}
+ */
+export interface INavButtonProps extends IButtonProps {
+  /**
+   * (Optional) Link to be rendered.
+   */
+  link?: INavLink;
 }

@@ -283,6 +283,11 @@ export interface IRawStyleBase extends IRawFontStyle {
   MsHighContrastAdjust?: ICSSRule | string;
 
   /**
+   * (Ms specific) scrollbar behavior adjust rule.
+   */
+  MsOverflowStyle?: 'auto' | 'none' | 'scrollbar' | '-ms-autohiding-scrollbar';
+
+  /**
    * (Moz specific) font smoothing directive.
    */
   MozOsxFontSmoothing?: 'none' | 'antialiased' | 'grayscale' | 'subpixel-antialiased';
@@ -301,6 +306,12 @@ export interface IRawStyleBase extends IRawFontStyle {
    * (Webkit specific) color of the highlight that appears overa  link while it's being tapped
    */
   WebkitTapHighlightColor?: string;
+
+  /**
+   * (Webkit specific) controls the text inflation algorithm used on some smartphones and tablets.
+   * Other browsers will ignore this property.
+   */
+  WebkitTextSizeAdjust?: 'none' | 'auto' | ICSSPercentageRule | ICSSRule;
 
   /**
    * Aligns a flex container's lines within the flex container when there is extra space
@@ -350,7 +361,8 @@ export interface IRawStyleBase extends IRawFontStyle {
   animation?: ICSSRule | string;
 
   /**
-   * Defines a length of time to elapse before an animation starts, allowing an animation to begin execution some time after it is applied.
+   * Defines a length of time to elapse before an animation starts, allowing an animation to begin execution
+   * some time after it is applied.
    */
   animationDelay?: ICSSRule | string;
 
@@ -1120,7 +1132,15 @@ export interface IRawStyleBase extends IRawFontStyle {
    * See CSS justify-content property
    * https://www.w3.org/TR/css-flexbox-1/#justify-content-property
    */
-  justifyContent?: ICSSRule | 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch';
+  justifyContent?:
+    | ICSSRule
+    | 'flex-start'
+    | 'flex-end'
+    | 'center'
+    | 'space-between'
+    | 'space-around'
+    | 'space-evenly'
+    | 'stretch';
 
   /**
    * Justifies the box (as the alignment subject) within its containing block (as the alignment container)
@@ -1819,6 +1839,12 @@ export interface IRawStyleBase extends IRawFontStyle {
    * text, along with optional color and blur radius values.
    */
   textShadow?: ICSSRule | string;
+
+  /**
+   * The text-size-adjust CSS property controls the text inflation algorithm used
+   * on some smartphones and tablets. Other browsers will ignore this property.
+   */
+  textSizeAdjust?: 'none' | 'auto' | ICSSPercentageRule | ICSSRule;
 
   /**
    * This property transforms text for styling purposes. (It has no effect on the

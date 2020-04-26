@@ -1,5 +1,7 @@
 import { IColorRectangleStyleProps, IColorRectangleStyles } from './ColorRectangle.types';
 import { HighContrastSelector } from '../../../Styling';
+import { IsFocusVisibleClassName } from '../../../Utilities';
+import { hiddenContentStyle } from '@uifabric/styling';
 
 export const getStyles = (props: IColorRectangleStyleProps): IColorRectangleStyles => {
   const { className, theme, minSize } = props;
@@ -15,13 +17,19 @@ export const getStyles = (props: IColorRectangleStyleProps): IColorRectangleStyl
         borderRadius: effects.roundedCorner2,
         minWidth: minSize,
         minHeight: minSize,
+        outline: 'none',
+
         selectors: {
           [HighContrastSelector]: {
-            MsHighContrastAdjust: 'none'
-          }
-        }
+            MsHighContrastAdjust: 'none',
+          },
+
+          [`.${IsFocusVisibleClassName} &:focus`]: {
+            outline: `1px solid ${palette.neutralSecondary}`,
+          },
+        },
       },
-      className
+      className,
     ],
     light: [
       'ms-ColorPicker-light',
@@ -31,8 +39,10 @@ export const getStyles = (props: IColorRectangleStyleProps): IColorRectangleStyl
         right: 0,
         top: 0,
         bottom: 0,
-        background: 'linear-gradient(to right, white 0%, transparent 100%)'
-      }
+        // Intentionally DO NOT flip the color picker in RTL: its orientation is not very meaningful,
+        // and getting all the math and styles flipped correctly is tricky
+        background: 'linear-gradient(to right, white 0%, transparent 100%) /*@noflip*/',
+      },
     ],
     dark: [
       'ms-ColorPicker-dark',
@@ -42,8 +52,8 @@ export const getStyles = (props: IColorRectangleStyleProps): IColorRectangleStyl
         right: 0,
         top: 0,
         bottom: 0,
-        background: 'linear-gradient(to bottom, transparent 0, #000 100%)'
-      }
+        background: 'linear-gradient(to bottom, transparent 0, #000 100%)',
+      },
     ],
     thumb: [
       'ms-ColorPicker-thumb',
@@ -66,10 +76,11 @@ export const getStyles = (props: IColorRectangleStyleProps): IColorRectangleStyl
             border: `2px solid ${palette.white}`,
             borderRadius: '50%',
             boxSizing: 'border-box',
-            content: '""'
-          }
-        }
-      }
-    ]
+            content: '""',
+          },
+        },
+      },
+    ],
+    description: hiddenContentStyle,
   };
 };
